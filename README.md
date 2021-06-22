@@ -9,7 +9,7 @@
 ## Todo List
 - 회원가입
   - [x] phone & email 회원 가입
-  - [ ] username 중복 확인
+  - [x] username 중복 확인
   - [ ] email 형식 확인
   - [ ] password 형식 확인
 - 로그인
