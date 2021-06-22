@@ -8,6 +8,7 @@ export default gql`
     phoneNumber: String!
     email: String
     isRegistered(kind: Int!, account: String!): Boolean!
+    duplicateUsername(username: String!): Boolean!
     createdAt: String!
     updatedAt: String!
   }
