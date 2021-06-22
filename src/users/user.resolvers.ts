@@ -21,6 +21,17 @@ const resolvers: Resolvers = {
         return false; // 가입이 안되어있을 경우 -> 가입 필요
       }
     },
+    duplicateUsername: async (_, { username }, { client }) => {
+      const duplication = await client.user.findUnique({
+        where: { username },
+        select: { username: true },
+      });
+      if (!duplication) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 };
 

@@ -9,16 +9,6 @@ const resolvers: Resolvers = {
       { username, password, phoneNumber, email, kind, fullName },
       { client }
     ) => {
-      const user: Object = await client.user.findFirst({
-        where: { OR: [{ username }, { phoneNumber }] },
-        select: { username: true },
-      });
-      if (user) {
-        return {
-          ok: false,
-          error: '이미 사용 중입니다.',
-        };
-      }
       if (kind === accountKind.phone) {
         // 전화번호로 가입할 경우
         await client.user.create({
