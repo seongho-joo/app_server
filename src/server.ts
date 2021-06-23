@@ -2,7 +2,6 @@ import 'dotenv/config';
 import { typeDefs, resolvers } from './schema';
 import client from './client';
 import * as http from 'http';
-import * as passport from 'passport';
 import * as express from 'express';
 import * as logger from 'morgan';
 import { ApolloServer } from 'apollo-server-express';
@@ -24,8 +23,6 @@ const apollo: ApolloServer = new ApolloServer({
 const app = express();
 
 app.use(logger('tiny'));
-app.use(passport.initialize());
-app.use(passport.session());
 
 apollo.applyMiddleware({ app });
 
