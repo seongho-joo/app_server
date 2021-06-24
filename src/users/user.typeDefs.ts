@@ -7,8 +7,9 @@ export default gql`
     password: String
     phoneNumber: String!
     email: String
-    isRegistered(kind: Int!, account: String!): Boolean!
     duplicateUsername(username: String!): Boolean!
+    existEmail(email: String!): Boolean!
+    existPhoneNumber(phoneNumber: String!): Boolean!
     createdAt: String!
     updatedAt: String!
   }
