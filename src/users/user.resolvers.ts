@@ -1,5 +1,4 @@
 import { Resolvers } from '../types';
-import { accountKind } from './user.utils';
 
 const resolvers: Resolvers = {
   User: {
