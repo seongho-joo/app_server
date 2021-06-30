@@ -12,8 +12,9 @@ generator client {
 
 model User {
   username    String   @id
-  fullName    String
+  fullName    String?
   password    String?
+  location    String
   phoneNumber String   @unique
   email       String?  @unique
   createdAt   DateTime @default(now())
