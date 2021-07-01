@@ -8,9 +8,6 @@ export default gql`
     phoneNumber: String!
     location: String!
     email: String
-    duplicateUsername(username: String!): Boolean!
-    existEmail(email: String!): Boolean!
-    existPhoneNumber(phoneNumber: String!): Boolean!
     createdAt: String!
     updatedAt: String!
   }
