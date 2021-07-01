@@ -6,7 +6,7 @@ const resolvers: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
-      { username, password, phoneNumber, email, kind, fullName },
+      { username, password, phoneNumber, email, kind, fullName, location },
       { client }
     ) => {
       if (kind === accountKind.phone) {
@@ -14,6 +14,7 @@ const resolvers: Resolvers = {
         await client.user.create({
           data: {
             username,
+            location,
             phoneNumber,
             fullName,
           },
@@ -24,6 +25,7 @@ const resolvers: Resolvers = {
         await client.user.create({
           data: {
             username,
+            location,
             phoneNumber,
             email,
             password: hash,
