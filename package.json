@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/server --delay 2s --ext ts,js",
     "studio": "npx prisma studio",
-    "migrate": "npx prisma migrate dev --preview-feature"
+    "migrate": "npx prisma migrate dev --preview-feature",
+    "start": "ts-node src/server"
   },
   "author": "",
   "license": "ISC",
