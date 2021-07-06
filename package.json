@@ -22,11 +22,11 @@
     "graphql-tools": "^7.0.4",
     "graphql-upload": "^11.0.0",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "ts-node": "^10.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7",
-    "prisma": "^2.20.1",
-    "ts-node": "^9.1.1"
+    "prisma": "^2.20.1"
   }
 }
