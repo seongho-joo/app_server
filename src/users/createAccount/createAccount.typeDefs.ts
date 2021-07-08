@@ -5,11 +5,10 @@ export default gql`
     createAccount(
       username: String!
       fullName: String!
-      password: String
-      phoneNumber: String
-      email: String
+      password: String!
+      phoneNumber: String!
+      email: String!
       location: String!
-      kind: Int!
     ): MutationResponse!
   }
 `;
