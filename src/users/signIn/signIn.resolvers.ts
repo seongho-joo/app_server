@@ -24,7 +24,7 @@ const resolvers: Resolvers = {
         };
       }
       const token: string = jwt.sign(
-        { id: exUser.username },
+        { id: exUser.userId },
         process.env.JWT_SECRET
       );
       return {

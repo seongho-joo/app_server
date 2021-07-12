@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    seeAccount: (_, { username }, { client }) => {
-      client.user.findUnique({ where: { username } });
+    seeAccount: (_, { userId }, { client }) => {
+      client.user.findUnique({ where: { userId } });
     },
   },
 };
