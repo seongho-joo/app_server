@@ -17,7 +17,7 @@ export const getUser = async (token: string) => {
       const verifiedToken: any = await jwt.verify(token, JWT_SECRET);
       if ('id' in verifiedToken) {
         const user = await client.user.findUnique({
-          where: { username: verifiedToken['id'] },
+          where: { userId: verifiedToken['id'] },
         });
         if (user) {
           return user;
