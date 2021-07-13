@@ -5,10 +5,10 @@ export default gql`
     userId: Int!
     username: String!
     fullName: String
-    password: String
+    password: String!
     phoneNumber: String!
-    location: String!
-    email: String
+    location: String
+    email: String!
     createdAt: String!
     updatedAt: String!
   }
