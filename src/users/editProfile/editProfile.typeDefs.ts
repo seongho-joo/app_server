@@ -4,7 +4,7 @@ export default gql`
   type Mutation {
     editProfile(
       userId: Int!
-      useranme: String
+      username: String
       location: String
     ): MutationResponse!
   }

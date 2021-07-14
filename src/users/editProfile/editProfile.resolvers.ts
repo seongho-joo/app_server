@@ -22,6 +22,9 @@ const resolvers: Resolvers = {
             location,
           },
         });
+        return {
+          ok: true,
+        };
       }
     ),
   },
