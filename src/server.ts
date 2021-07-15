@@ -5,12 +5,14 @@ import * as http from 'http';
 import * as express from 'express';
 import * as logger from 'morgan';
 import { ApolloServer } from 'apollo-server-express';
+import { graphqlUploadExpress } from 'graphql-upload';
 import { getUser } from './users/user.utils';
 
 const PORT: string = process.env.PORT;
 const apollo: ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  uploads: false,
   playground: true,
   introspection: true,
   context: async ({ req }) => {
@@ -24,6 +26,7 @@ const apollo: ApolloServer = new ApolloServer({
 const app = express();
 
 app.use(logger('tiny'));
+app.use(graphqlUploadExpress());
 
 apollo.applyMiddleware({ app });
 
