@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DDATABASE_URL")
 }
 
 generator client {
@@ -27,7 +27,7 @@ model Notification {
   id        Int      @id @default(autoincrement())
   userId    Int
   title     String
-  cotent    String
+  content   String
   read      Boolean  @default(false)
   user      User     @relation(fields: [userId], references: [userId])
   createdAt DateTime @default(now())
