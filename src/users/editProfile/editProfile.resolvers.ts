@@ -1,25 +1,32 @@
 import { protectedResolver } from './../user.utils';
 import { Resolvers } from '../../types';
+import { uploadToS3 } from '../../shared/shared.utils';
 
 const resolvers: Resolvers = {
   Mutation: {
     editProfile: protectedResolver(
-      async (_, { userId, username, location }, { client }) => {
-        const user: Object = await client.user.findUnique({
-          where: { userId },
+      async (_, { username, location, avatar }, { client, loggedInUser }) => {
+        const { userId } = loggedInUser;
+        const duplicateCheck: Object = await client.user.findUnique({
+          where: { username },
           select: { userId: true },
         });
-        if (!user) {
+        if (duplicateCheck) {
           return {
             ok: false,
-            error: '유저를 찾을 수 없습니다.',
+            error: '이미 사용 중인 닉네임입니다.',
           };
+        }
+        let avatarUrl: string = null;
+        if (avatar) {
+          avatarUrl = await uploadToS3(avatar, userId, 'avatars');
         }
         await client.user.update({
           where: { userId },
           data: {
-            username,
-            location,
+            ...(username && { username }),
+            ...(location && { location }),
+            ...(avatarUrl && { avatar: avatarUrl }),
           },
         });
         return {

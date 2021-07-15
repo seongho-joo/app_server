@@ -8,6 +8,7 @@ export default gql`
     password: String!
     phoneNumber: String!
     location: String
+    avatar: String
     email: String!
     createdAt: String!
     updatedAt: String!
