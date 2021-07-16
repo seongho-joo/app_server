@@ -11,18 +11,19 @@ generator client {
 }
 
 model User {
-  userId          Int             @id @default(autoincrement())
-  fullName        String
-  username        String          @unique
-  avatar          String?
-  email           String          @unique
-  password        String
-  phoneNumber     String          @unique
-  location        String?
-  notifications   Notification[]
-  searchHistories SearchHistory[]
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  userId             Int             @id @default(autoincrement())
+  fullName           String
+  username           String          @unique
+  avatar             String?
+  email              String          @unique
+  password           String
+  phoneNumber        String          @unique
+  location           String?
+  searchHistoryOnOff Boolean         @default(true)
+  notifications      Notification[]
+  searchHistories    SearchHistory[]
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
 }
 
 model Notification {

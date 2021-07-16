@@ -10,6 +10,7 @@ export default gql`
     location: String
     avatar: String
     email: String!
+    searchHistoryOnOf: Boolean!
     searchHistories: [SearchHistory]
     createdAt: String!
     updatedAt: String!
