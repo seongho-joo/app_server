@@ -19,6 +19,11 @@
 - 회원정보 찾기
   - [x] 사용자 email 조회
   - [x] password 변경
+- 알림
+  - [x] Insert Notifications
+  - [ ] 알림 목록 보기
+  - [ ] Push 알림 [FCM, kakao api]
+  - [ ] 알림 on off
 
 ## Error 기록
 ![스크린샷 2021-07-15 오후 9 26 54](https://user-images.githubusercontent.com/45463495/125788060-a94d64d9-f6ab-4e11-9327-65210677c004.png)

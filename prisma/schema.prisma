@@ -20,6 +20,7 @@ model User {
   phoneNumber        String          @unique
   location           String?
   searchHistoryOnOff Boolean         @default(true)
+  notificationOnOff  Boolean         @default(true)
   notifications      Notification[]
   searchHistories    SearchHistory[]
   createdAt          DateTime        @default(now())

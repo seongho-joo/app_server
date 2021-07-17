@@ -11,6 +11,7 @@ export default gql`
     avatar: String
     email: String!
     searchHistoryOnOf: Boolean!
+    notificationOnOf: Boolean!
     searchHistories: [SearchHistory]
     createdAt: String!
     updatedAt: String!
