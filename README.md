@@ -21,7 +21,7 @@
   - [x] password 변경
 - 알림
   - [x] Insert Notifications
-  - [ ] 알림 목록 보기
+  - [x] 알림 목록 보기
   - [ ] Push 알림 [FCM, kakao api]
   - [ ] 알림 on off
 
