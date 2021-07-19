@@ -23,6 +23,7 @@ model User {
   notificationOnOff  Boolean         @default(true)
   notifications      Notification[]
   searchHistories    SearchHistory[]
+  products           Product[]
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
 }
@@ -45,4 +46,25 @@ model SearchHistory {
   word      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id        Int       @id @default(autoincrement())
+  authorId  Int
+  title     String
+  price     Int
+  picture   String[]
+  content   String?
+  author    User      @relation(fields: [authorId], references: [userId])
+  hashtags  Hashtag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Hashtag {
+  id        Int       @id @default(autoincrement())
+  hashtag   String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
