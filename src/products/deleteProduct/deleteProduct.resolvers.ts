@@ -1,6 +1,6 @@
 import { Product } from '@prisma/client';
 import { DeleteObjectsRequest } from 'aws-sdk/clients/s3';
-import { deleteFileToS3 } from '../../shared/shared.utils';
+import { deleteObjectsS3 } from '../../shared/shared.utils';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
@@ -42,7 +42,7 @@ const resolvers: Resolvers = {
               Objects,
             },
           };
-          await deleteFileToS3(param);
+          await deleteObjectsS3(param);
         }
         await client.product.delete({ where: { id } });
         return { ok: true };

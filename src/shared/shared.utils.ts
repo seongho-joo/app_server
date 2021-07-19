@@ -33,7 +33,7 @@ export const uploadToS3 = async (
   return Location;
 };
 
-export const deleteFileToS3 = async (param: DeleteObjectsRequest) => {
+export const deleteObjectsS3 = async (param: DeleteObjectsRequest) => {
   const { Errors } = await new AWS.S3().deleteObjects(param).promise();
   if (Errors.length !== 0) {
     throw Errors;
