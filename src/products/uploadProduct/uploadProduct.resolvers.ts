@@ -20,7 +20,7 @@ const resolvers: Resolvers = {
                 loggedInUser.userId,
                 title,
                 loggedInUser.username,
-                'product'
+                'products'
               );
               return location;
             })

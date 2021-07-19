@@ -1,12 +1,13 @@
 import { protectedResolver } from './../../users/user.utils';
-import { Resolvers } from '../../types';
+import { Resolvers, Identity } from '../../types';
 
 const resolvers: Resolvers = {
   Mutation: {
     createSearchHistory: protectedResolver(
       async (_, { word }, { client, loggedInUser }) => {
-        const exWord = await client.searchHistory.findFirst({
+        const exWord: Identity = await client.searchHistory.findFirst({
           where: { word, userId: loggedInUser.userId },
+          select: { id: true },
         });
         if (exWord) {
           // 이미 검색한 기록이 있을때 updateAt만 변경해줌

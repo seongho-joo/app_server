@@ -1,11 +1,11 @@
-import { Resolvers } from '../../types';
+import { Resolvers, Identity } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
     selectEmail: async (_, { email }, { client }) => {
-      const user: Object = await client.user.findUnique({
+      const user: Identity = await client.user.findUnique({
         where: { email },
-        select: { username: true },
+        select: { userId: true },
       });
       if (!user) {
         return { ok: false, error: '입력하신 정보를 다시 확인해주세요 !' };
@@ -14,9 +14,9 @@ const resolvers: Resolvers = {
       }
     },
     selectPhone: async (_, { phoneNumber }, { client }) => {
-      const user: Object = await client.user.findUnique({
+      const user: Identity = await client.user.findUnique({
         where: { phoneNumber },
-        select: { username: true },
+        select: { userId: true },
       });
       if (!user) {
         return { ok: false, error: '입력하신 정보를 다시 확인해주세요 !' };

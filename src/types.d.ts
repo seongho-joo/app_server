@@ -6,9 +6,9 @@ type Context = {
   client: PrismaClient;
 };
 
-type aswParam = {
-  Bucket: string;
-  Key: string;
+type Identity = {
+  id?: number;
+  userId?: number;
 };
 
 type File = {

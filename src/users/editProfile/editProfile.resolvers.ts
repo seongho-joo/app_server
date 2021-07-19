@@ -1,5 +1,5 @@
 import { protectedResolver } from './../user.utils';
-import { Resolvers } from '../../types';
+import { Identity, Resolvers } from '../../types';
 import { uploadToS3 } from '../../shared/shared.utils';
 
 const resolvers: Resolvers = {
@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
       async (_, { username, location, avatar }, { client, loggedInUser }) => {
         const { userId } = loggedInUser;
         if (username) {
-          const duplicateCheck: Object = await client.user.findUnique({
+          const duplicateCheck: Identity = await client.user.findUnique({
             where: { username },
             select: { userId: true },
           });

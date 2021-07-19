@@ -1,9 +1,9 @@
-import { Resolvers } from '../../types';
+import { Resolvers, Identity } from '../../types';
 
 const resolvers: Resolvers = {
   Mutation: {
     insertNotification: async (_, { userId, title, content }, { client }) => {
-      const exUser = await client.user.findUnique({
+      const exUser: Identity = await client.user.findUnique({
         where: { userId },
         select: { userId: true },
       });
