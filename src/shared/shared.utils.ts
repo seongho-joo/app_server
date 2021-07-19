@@ -1,4 +1,5 @@
 import * as AWS from 'aws-sdk';
+import { DeleteObjectsRequest } from 'aws-sdk/clients/s3';
 import { File } from '../types';
 
 AWS.config.update({
@@ -30,4 +31,11 @@ export const uploadToS3 = async (
     })
     .promise();
   return Location;
+};
+
+export const deleteFileToS3 = async (param: DeleteObjectsRequest) => {
+  const { Errors } = await new AWS.S3().deleteObjects(param).promise();
+  if (Errors.length !== 0) {
+    throw Errors;
+  }
 };
