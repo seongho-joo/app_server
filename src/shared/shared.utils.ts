@@ -11,11 +11,16 @@ AWS.config.update({
 export const uploadToS3 = async (
   file: File,
   userId: number,
+  title: string,
+  username: string,
   dirName: string
 ) => {
   const { filename, createReadStream } = await file;
   const readStream = createReadStream();
-  const objectName: string = `${dirName}/${userId}_${Date.now()}_${filename}`;
+  const objectName: string =
+    dirName === 'avatars'
+      ? `${dirName}/${userId}_${username}/${userId}_${Date.now()}_${filename}`
+      : `${dirName}/${userId}_${username}/${title}/${userId}_${Date.now()}_${filename}`;
   const { Location } = await new AWS.S3()
     .upload({
       Bucket: 'timebridge-uploads',
