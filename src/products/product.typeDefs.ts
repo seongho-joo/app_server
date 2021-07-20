@@ -9,6 +9,7 @@ export default gql`
     picture: [String]
     hashtags: [Hashtag]
     hits: Int!
+    isMine: Boolean!
     content: String
     createdAt: String!
     updatedAt: String!
