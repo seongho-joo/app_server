@@ -1,9 +1,20 @@
+import { Product } from '@prisma/client';
 import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
-  Query: {
-    seeProduct: (_, { id }, { client }) =>
-      client.product.findUnique({ where: { id } }),
+  Mutation: {
+    seeProduct: async (_, { id }, { client }) => {
+      const exProduct: Product = await client.product.findUnique({
+        where: { id },
+      });
+      if (!exProduct) {
+        return null;
+      }
+      return await client.product.update({
+        where: { id },
+        data: { hits: exProduct.hits + 1 },
+      });
+    },
   },
 };
 

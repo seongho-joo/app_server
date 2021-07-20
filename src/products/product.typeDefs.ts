@@ -8,6 +8,7 @@ export default gql`
     price: Int!
     picture: [String]
     hashtags: [Hashtag]
+    hits: Int!
     content: String
     createdAt: String!
     updatedAt: String!
