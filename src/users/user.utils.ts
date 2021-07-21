@@ -2,11 +2,6 @@ import * as jwt from 'jsonwebtoken';
 import client from '../client';
 import { Resolver, Context } from '../types';
 
-export enum accountKind {
-  phone,
-  email,
-}
-
 export const getUser = async (token: string) => {
   try {
     if (!token) {
