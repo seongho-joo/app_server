@@ -29,7 +29,8 @@ const resolvers: Resolvers = {
           const Objects = await Promise.all(
             files.map(async (item: string) => {
               const keyName: string[] = item.split(
-                'https://timebridge-uploads.s3.amazonaws.com/'
+                'https://timebridge-uploads.s3.ap-northeast-2.amazonaws.com/' ||
+                  'https://timebridge-uploads.s3.amazonaws.com/'
               );
               return {
                 Key: keyName[1],
