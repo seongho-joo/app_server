@@ -23,7 +23,7 @@
   - [x] Insert Notifications
   - [x] 알림 목록 보기
   - [x] 알림 삭제
-  - [ ] 알림 읽음
+  - [x] 알림 읽음
   - [ ] Push 알림 [FCM, kakao api]
   - [ ] 알림 on off
 - 게시글
