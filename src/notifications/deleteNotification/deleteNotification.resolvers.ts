@@ -1,4 +1,4 @@
-import { Resolvers, Identity } from '../../types';
+import { Identity, Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
 const resolvers: Resolvers = {

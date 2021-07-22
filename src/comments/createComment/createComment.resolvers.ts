@@ -18,7 +18,6 @@ const resolvers: Resolvers = {
             error: '게시글이 존재하지 않음',
           };
         }
-        console.log(comment);
         const newComment: Comment = await client.comment.create({
           data: {
             comment,
