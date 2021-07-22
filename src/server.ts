@@ -3,12 +3,12 @@ import { typeDefs, resolvers } from './schema';
 import client from './client';
 import * as http from 'http';
 import * as express from 'express';
-import * as logger from 'morgan';
+import logger from 'morgan';
 import { ApolloServer } from 'apollo-server-express';
 import { graphqlUploadExpress } from 'graphql-upload';
 import { getUser } from './users/user.utils';
 
-const PORT: string = process.env.PORT;
+const PORT: string | undefined = process.env.PORT;
 const apollo: ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
@@ -23,7 +23,7 @@ const apollo: ApolloServer = new ApolloServer({
   },
 });
 
-const app = express();
+const app = express.default();
 
 app.use(logger('tiny'));
 app.use(graphqlUploadExpress());

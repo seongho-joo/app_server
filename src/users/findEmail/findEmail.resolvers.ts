@@ -4,7 +4,7 @@ import { Resolvers } from '../../types';
 const resolvers: Resolvers = {
   Query: {
     findEmail: async (_, { phoneNumber }, { client }) => {
-      const user: User = await client.user.findUnique({
+      const user: User | null = await client.user.findUnique({
         where: { phoneNumber },
       });
       if (!user) {

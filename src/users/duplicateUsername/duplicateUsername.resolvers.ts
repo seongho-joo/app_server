@@ -3,7 +3,7 @@ import { Identity, Resolvers } from '../../types';
 const resolvers: Resolvers = {
   Query: {
     duplicateUsername: async (_, { username }, { client }) => {
-      const user: Identity = await client.user.findUnique({
+      const user: Identity | null = await client.user.findUnique({
         where: { username },
         select: { userId: true },
       });

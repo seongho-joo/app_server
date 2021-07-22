@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 const resolvers: Resolvers = {
   Mutation: {
     editPassword: async (_, { password, email }, { client }) => {
-      const user: Identity = await client.user.findUnique({
+      const user: Identity | null = await client.user.findUnique({
         where: { email },
         select: { userId: true },
       });

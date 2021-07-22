@@ -5,7 +5,7 @@ const resolvers: Resolvers = {
   Mutation: {
     createSearchHistory: protectedResolver(
       async (_, { word }, { client, loggedInUser }) => {
-        const exWord: Identity = await client.searchHistory.findFirst({
+        const exWord: Identity | null = await client.searchHistory.findFirst({
           where: { word, userId: loggedInUser.userId },
           select: { id: true },
         });
@@ -34,11 +34,15 @@ const resolvers: Resolvers = {
         });
         if (count == 11) {
           // 검색 기록 개수가 10개가 되면 제일 오래된 값을 삭제함
-          const { id } = await client.searchHistory.findFirst({
-            where: { userId: loggedInUser.userId },
-            select: { id: true },
-          });
-          await client.searchHistory.delete({ where: { id } });
+          const history: Identity | null = await client.searchHistory.findFirst(
+            {
+              where: { userId: loggedInUser.userId },
+              select: { id: true },
+            }
+          );
+          if (history) {
+            await client.searchHistory.delete({ where: { id: history.id } });
+          }
         }
         return {
           ok: true,

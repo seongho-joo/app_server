@@ -6,7 +6,9 @@ import * as jwt from 'jsonwebtoken';
 const resolvers: Resolvers = {
   Mutation: {
     emailSignIn: async (_, { email, password }, { client }) => {
-      const exUser: User = await client.user.findUnique({ where: { email } });
+      const exUser: User | null = await client.user.findUnique({
+        where: { email },
+      });
       if (!exUser) {
         return {
           ok: false,
@@ -23,10 +25,11 @@ const resolvers: Resolvers = {
           error: 'email 또는 password를 잘못 입력하셨습니다.',
         };
       }
-      const token: string = jwt.sign(
-        { id: exUser.userId },
-        process.env.JWT_SECRET
-      );
+      const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
+      let token: string | undefined = undefined;
+      if (JWT_SECRET) {
+        token = jwt.sign({ id: exUser.userId }, JWT_SECRET);
+      }
       return {
         ok: true,
         token,

@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
   Mutation: {
     deleteProduct: protectedResolver(
       async (_, { id }, { client, loggedInUser }) => {
-        const exProduct: Product = await client.product.findUnique({
+        const exProduct: Product | null = await client.product.findUnique({
           where: { id },
         });
         if (!exProduct) {

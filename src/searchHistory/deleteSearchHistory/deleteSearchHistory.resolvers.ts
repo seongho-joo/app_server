@@ -4,7 +4,7 @@ import { protectedResolver } from '../../users/user.utils';
 const resolvers: Resolvers = {
   Mutation: {
     deleteSearchHistory: protectedResolver(async (_, { id }, { client }) => {
-      const exHistory: Identity = await client.searchHistory.findUnique({
+      const exHistory: Identity | null = await client.searchHistory.findUnique({
         where: { id },
         select: { id: true },
       });

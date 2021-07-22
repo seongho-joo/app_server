@@ -4,7 +4,7 @@ import { protectedResolver } from '../../users/user.utils';
 const resolvers: Resolvers = {
   Mutation: {
     deleteNotification: protectedResolver(async (_, { id }, { client }) => {
-      const exNotifi: Identity = await client.notification.findUnique({
+      const exNotifi: Identity | null = await client.notification.findUnique({
         where: { id },
         select: { id: true },
       });

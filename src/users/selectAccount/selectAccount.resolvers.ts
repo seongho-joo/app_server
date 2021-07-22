@@ -3,7 +3,7 @@ import { Resolvers, Identity } from '../../types';
 const resolvers: Resolvers = {
   Query: {
     selectEmail: async (_, { email }, { client }) => {
-      const user: Identity = await client.user.findUnique({
+      const user: Identity | null = await client.user.findUnique({
         where: { email },
         select: { userId: true },
       });
@@ -14,7 +14,7 @@ const resolvers: Resolvers = {
       }
     },
     selectPhone: async (_, { phoneNumber }, { client }) => {
-      const user: Identity = await client.user.findUnique({
+      const user: Identity | null = await client.user.findUnique({
         where: { phoneNumber },
         select: { userId: true },
       });

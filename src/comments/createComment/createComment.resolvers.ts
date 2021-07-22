@@ -7,7 +7,7 @@ const resolvers: Resolvers = {
     createComment: protectedResolver(
       async (_, { productId, comment }, { loggedInUser, client }) => {
         const { userId } = loggedInUser;
-        const product: Identity = await client.product.findUnique({
+        const product: Identity | null = await client.product.findUnique({
           where: { id: productId },
           select: { id: true },
         });

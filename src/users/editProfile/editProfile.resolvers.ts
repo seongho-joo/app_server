@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
       async (_, { username, location, avatar }, { client, loggedInUser }) => {
         const { userId } = loggedInUser;
         if (username) {
-          const duplicateCheck: Identity = await client.user.findUnique({
+          const duplicateCheck: Identity | null = await client.user.findUnique({
             where: { username },
             select: { userId: true },
           });
@@ -19,12 +19,12 @@ const resolvers: Resolvers = {
             };
           }
         }
-        let avatarUrl: string = null;
+        let avatarUrl: string | undefined = undefined;
         if (avatar) {
           avatarUrl = await uploadToS3(
             avatar,
             userId,
-            undefined,
+            'undefined',
             loggedInUser.username,
             'avatars'
           );

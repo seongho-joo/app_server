@@ -4,7 +4,7 @@ import { Resolvers } from '../../types';
 const resolvers: Resolvers = {
   Mutation: {
     seeProduct: async (_, { id }, { client }) => {
-      const exProduct: Product = await client.product.findUnique({
+      const exProduct: Product | null = await client.product.findUnique({
         where: { id },
       });
       if (!exProduct) {

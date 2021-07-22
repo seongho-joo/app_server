@@ -2,12 +2,17 @@ import * as AWS from 'aws-sdk';
 import { DeleteObjectsRequest } from 'aws-sdk/clients/s3';
 import { File } from '../types';
 
-AWS.config.update({
-  credentials: {
-    accessKeyId: process.env.AWS_S3_KEY,
-    secretAccessKey: process.env.AWS_S3_SECRET,
-  },
-});
+const accessKeyId: string | undefined = process.env.AWS_S3_KEY;
+const secretAccessKey: string | undefined = process.env.AWS_S3_SECRET;
+
+if (accessKeyId && secretAccessKey) {
+  AWS.config.update({
+    credentials: {
+      accessKeyId,
+      secretAccessKey,
+    },
+  });
+}
 
 export const uploadToS3 = async (
   file: File,
@@ -34,8 +39,5 @@ export const uploadToS3 = async (
 };
 
 export const deleteObjectsS3 = async (param: DeleteObjectsRequest) => {
-  const { Errors } = await new AWS.S3().deleteObjects(param).promise();
-  if (Errors.length !== 0) {
-    throw Errors;
-  }
+  await new AWS.S3().deleteObjects(param).promise();
 };

@@ -33,7 +33,7 @@ const resolvers: Resolvers = {
             create: { hashtag: item },
           }));
         }
-        const product: Product = await client.product.create({
+        const product: Product | null = await client.product.create({
           data: {
             title,
             author: {

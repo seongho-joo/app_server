@@ -5,7 +5,7 @@ import { protectedResolver } from '../../users/user.utils';
 const resolvers: Resolvers = {
   Mutation: {
     readNotification: protectedResolver(async (_, { id }, { client }) => {
-      const noti: Notification = await client.notification.findUnique({
+      const noti: Notification | null = await client.notification.findUnique({
         where: { id },
       });
       if (!noti) {

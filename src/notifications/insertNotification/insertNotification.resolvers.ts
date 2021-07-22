@@ -3,7 +3,7 @@ import { Resolvers, Identity } from '../../types';
 const resolvers: Resolvers = {
   Mutation: {
     insertNotification: async (_, { userId, title, content }, { client }) => {
-      const exUser: Identity = await client.user.findUnique({
+      const exUser: Identity | null = await client.user.findUnique({
         where: { userId },
         select: { userId: true },
       });
