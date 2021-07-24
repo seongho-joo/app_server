@@ -26,10 +26,13 @@ const resolvers: Resolvers = {
         };
       }
       const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
-      let token: string | undefined = undefined;
-      if (JWT_SECRET) {
-        token = jwt.sign({ id: exUser.userId }, JWT_SECRET);
+
+      if (JWT_SECRET === undefined) {
+        throw new Error('env JWT_SECRET 존재하지 않음');
       }
+
+      const token: string = jwt.sign({ id: exUser.userId }, JWT_SECRET);
+
       return {
         ok: true,
         token,

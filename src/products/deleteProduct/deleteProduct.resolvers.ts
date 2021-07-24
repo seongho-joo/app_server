@@ -30,6 +30,10 @@ const resolvers: Resolvers = {
           await client.comment.deleteMany({ where: { productId: id } });
         }
         if (exProduct.picture.length !== 0) {
+          const Bucket: string | undefined = process.env.BUCKET;
+          if (Bucket === undefined) {
+            throw new Error('env BUCKET 존재하지 않음');
+          }
           let files: string[];
           files = exProduct.picture;
           const Objects = await Promise.all(
@@ -44,7 +48,7 @@ const resolvers: Resolvers = {
             })
           );
           const param: DeleteObjectsRequest = {
-            Bucket: 'majgo-uploads',
+            Bucket,
             Delete: {
               Objects,
             },

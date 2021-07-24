@@ -8,15 +8,19 @@ export const getUser = async (token: any) => {
       return null;
     }
     const JWT_SECRET: string | undefined = process.env.JWT_SECRET;
-    if (JWT_SECRET) {
-      const verifiedToken: any = await jwt.verify(token, JWT_SECRET);
-      if ('id' in verifiedToken) {
-        const user = await client.user.findUnique({
-          where: { userId: verifiedToken['id'] },
-        });
-        if (user) {
-          return user;
-        }
+
+    if (JWT_SECRET === undefined) {
+      throw new Error('env JWT_SECRET 존재하지 않음');
+    }
+
+    const verifiedToken: any = await jwt.verify(token, JWT_SECRET);
+
+    if ('id' in verifiedToken) {
+      const user = await client.user.findUnique({
+        where: { userId: verifiedToken['id'] },
+      });
+      if (user) {
+        return user;
       }
     }
   } catch {
