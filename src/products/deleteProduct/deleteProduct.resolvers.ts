@@ -1,4 +1,4 @@
-import { Product } from '@prisma/client';
+import { Comment, Product } from '@prisma/client';
 import { DeleteObjectsRequest } from 'aws-sdk/clients/s3';
 import { deleteObjectsS3 } from '../../shared/shared.utils';
 import { Resolvers } from '../../types';
@@ -23,7 +23,14 @@ const resolvers: Resolvers = {
             error: '권한이 없음',
           };
         }
-        if (exProduct.picture) {
+        const comment: Comment[] | null = await client.comment.findMany({
+          where: { productId: id },
+        });
+        if (comment.length !== 0) {
+          await client.comment.deleteMany({ where: { productId: id } });
+        }
+        if (exProduct.picture.length !== 0) {
+          console.log('ad');
           let files: string[];
           files = exProduct.picture;
           const Objects = await Promise.all(
