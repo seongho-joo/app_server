@@ -11,6 +11,7 @@ export default gql`
     hits: Int!
     isMine: Boolean!
     content: String
+    comments: [Comment]
     createdAt: String!
     updatedAt: String!
   }

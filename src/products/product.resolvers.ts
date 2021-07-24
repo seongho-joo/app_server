@@ -10,6 +10,8 @@ const resolvers: Resolvers = {
       }
       return authorId === loggedInUser.userId;
     },
+    comments: ({ id }, _, { client }) =>
+      client.product.findUnique({ where: { id } }).comments(),
   },
 };
 
