@@ -30,14 +30,13 @@ const resolvers: Resolvers = {
           await client.comment.deleteMany({ where: { productId: id } });
         }
         if (exProduct.picture.length !== 0) {
-          console.log('ad');
           let files: string[];
           files = exProduct.picture;
           const Objects = await Promise.all(
             files.map(async (item: string) => {
               const keyName: string[] = item.split(
-                'https://timebridge-uploads.s3.ap-northeast-2.amazonaws.com/' ||
-                  'https://timebridge-uploads.s3.amazonaws.com/'
+                'https://majgo-uploads.s3.ap-northeast-2.amazonaws.com/' ||
+                  'https://majgo-uploads.s3.amazonaws.com/'
               );
               return {
                 Key: keyName[1],
@@ -45,7 +44,7 @@ const resolvers: Resolvers = {
             })
           );
           const param: DeleteObjectsRequest = {
-            Bucket: 'timebridge-uploads',
+            Bucket: 'majgo-uploads',
             Delete: {
               Objects,
             },

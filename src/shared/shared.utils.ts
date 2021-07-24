@@ -29,7 +29,7 @@ export const uploadToS3 = async (
       : `${dirName}/${userId}_${username}/${title}/${userId}_${Date.now()}_${filename}`;
   const { Location } = await new AWS.S3()
     .upload({
-      Bucket: 'timebridge-uploads',
+      Bucket: 'majgo-uploads',
       Key: objectName,
       ACL: 'public-read',
       Body: readStream,
