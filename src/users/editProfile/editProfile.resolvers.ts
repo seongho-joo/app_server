@@ -21,13 +21,7 @@ const resolvers: Resolvers = {
         }
         let avatarUrl: string | undefined = undefined;
         if (avatar) {
-          avatarUrl = await uploadToS3(
-            avatar,
-            userId,
-            'undefined',
-            loggedInUser.username,
-            'avatars'
-          );
+          avatarUrl = await uploadToS3(avatar, 'avtars', loggedInUser);
         }
         await client.user.update({
           where: { userId },

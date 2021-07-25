@@ -14,13 +14,12 @@ const resolvers: Resolvers = {
         let picturesUrl: string[] = [];
         if (pictures) {
           picturesUrl = await Promise.all(
-            pictures.map(async (item: File) => {
+            pictures.map(async (file: File) => {
               const location: string = await uploadToS3(
-                item,
-                loggedInUser.userId,
-                title,
-                loggedInUser.username,
-                'products'
+                file,
+                'products',
+                loggedInUser,
+                title
               );
               return location;
             })

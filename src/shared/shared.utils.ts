@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import * as AWS from 'aws-sdk';
 import { DeleteObjectsRequest } from 'aws-sdk/clients/s3';
 import { File } from '../types';
@@ -25,17 +26,31 @@ AWS.config.update({
 
 export const uploadToS3 = async (
   file: File,
-  userId: number,
-  title: string,
-  username: string,
-  dirName: string
+  dirName: string,
+  loggedInUser?: User,
+  title?: string
 ) => {
   const { filename, createReadStream } = await file;
   const readStream = createReadStream();
-  const objectName: string =
-    dirName === 'avatars'
-      ? `${dirName}/${userId}_${username}/${userId}_${Date.now()}_${filename}`
-      : `${dirName}/${userId}_${username}/${title}/${userId}_${Date.now()}_${filename}`;
+
+  let objectName: string = `${dirName}/`;
+  switch (dirName) {
+    case 'avatars':
+      if (loggedInUser) {
+        objectName += `${loggedInUser.userId}_${loggedInUser.username}/${
+          loggedInUser.userId
+        }_${Date.now()}_${filename}`;
+      }
+    case 'products':
+      if (loggedInUser && title) {
+        objectName += `${loggedInUser.userId}_${
+          loggedInUser.username
+        }/${title}/${loggedInUser.userId}_${Date.now()}_${filename}`;
+      }
+    case 'banners':
+      objectName += `${Date.now()}_${filename}`;
+  }
+
   const { Location } = await new AWS.S3()
     .upload({
       Bucket,
