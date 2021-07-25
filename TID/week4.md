@@ -33,3 +33,51 @@ const resolvers: Resolvers = {
   },
 };
 ```
+
+### 상품 상세보기에서 댓글 보기
+```ts
+comments: ({ id }, _, { client }) =>
+  client.product.findUnique({ where: { id } }).comments(),
+```
+
+### 상품 삭제 시 댓글이 존재하면 댓글 삭제 후 삭제 진행
+```ts
+const comment: Comment[] | null = await client.comment.findMany({
+  where: { productId: id },
+});
+if (comment.length !== 0) {
+  await client.comment.deleteMany({ where: { productId: id } });
+}
+```
+
+### 댓글 수정
+```ts
+const resolvers: Resolvers = {
+  Mutation: {
+    editComment: protectedResolver(
+      async (_, { id, payload }, { client, loggedInUser }) => {
+        const comment: Comment | null = await client.comment.findUnique({
+          where: { id },
+        });
+        if (!comment) {
+          return {
+            ok: false,
+            error: '댓글이 존재하지 않음',
+          };
+        }
+        if (loggedInUser.userId !== comment.authorId) {
+          return {
+            ok: false,
+            error: '권한이 없음',
+          };
+        }
+        await client.comment.update({
+          where: { id },
+          data: { comment: payload },
+        });
+        return { ok: true };
+      }
+    ),
+  },
+};
+```
