@@ -82,3 +82,10 @@ model Comment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Banner {
+  id        Int      @id @default(autoincrement())
+  file      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
