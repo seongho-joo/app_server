@@ -1,12 +1,16 @@
 # 🚀 시간다리 server
 
 ## Tech
-- `typescript`
-- `apollo`
-- `prisma`
-- `graphql`
+- `Typescript`
+- `Apollo Server`
+- `Prisma`
+- `GraphQL`
+- `Postgresql`
+- `AWS`
 
-## Todo List
+<details>
+<summary>Todo List</summary>
+
 - 회원가입
   - [x] phone & email 회원 가입
   - [x] username 중복 확인
@@ -38,9 +42,13 @@
   - [x] 댓글 삭제
 - 배너
   - [x] 배너 생성
-  - [ ] 배너 삭제
+  - [x] 배너 삭제
+  - [x] 배너 보기
+</details>
+<br>
+<details>
+<summary>Error 기록</summary>
 
-## Error 기록
 ![스크린샷 2021-07-15 오후 9 26 54](https://user-images.githubusercontent.com/45463495/125788060-a94d64d9-f6ab-4e11-9327-65210677c004.png)
 nodejs 메모리 초과 에러가 생겨서
 ```
@@ -52,3 +60,6 @@ $ heroku config:set NODE_OPTIONS="--max_old_space_size=2560"
 2021-07-15T12:35:00.065659+00:00 heroku[web.1]: Error R14 (Memory quota exceeded)
 ```
 위와 같은 메모리 할당량을 초괴했다는 로그가 기록되고 있어서 추후에 aws Lightsail로 서버를 변경할 예정
+
+</details>
+
