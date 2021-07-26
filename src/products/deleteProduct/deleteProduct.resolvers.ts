@@ -23,38 +23,19 @@ const resolvers: Resolvers = {
             error: '권한이 없음',
           };
         }
+        // 댓글이 존재할 경우
         const comment: Comment[] | null = await client.comment.findMany({
           where: { productId: id },
         });
         if (comment.length !== 0) {
           await client.comment.deleteMany({ where: { productId: id } });
         }
-        if (exProduct.picture.length !== 0) {
-          const Bucket: string | undefined = process.env.BUCKET;
-          if (Bucket === undefined) {
-            throw new Error('env BUCKET 존재하지 않음');
-          }
-          let files: string[];
-          files = exProduct.picture;
-          const Objects = await Promise.all(
-            files.map(async (item: string) => {
-              const keyName: string[] = item.split(
-                'https://majgo-uploads.s3.ap-northeast-2.amazonaws.com/' ||
-                  'https://majgo-uploads.s3.amazonaws.com/'
-              );
-              return {
-                Key: keyName[1],
-              };
-            })
-          );
-          const param: DeleteObjectsRequest = {
-            Bucket,
-            Delete: {
-              Objects,
-            },
-          };
-          await deleteObjectsS3(param);
+        // 사진이 존재할 경우
+        const { picture } = exProduct;
+        if (picture.length !== 0) {
+          await deleteObjectsS3(picture);
         }
+
         await client.product.delete({ where: { id } });
         return { ok: true };
       }
