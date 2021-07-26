@@ -194,3 +194,40 @@ const resolvers: Resolvers = {
   },
 };
 ```
+
+### 상품 검색
+```ts
+const resolvers: Resolvers = {
+  Mutation: {
+    searchProduct: protectedResolver(
+      async (_, { word, lastId }, { client, loggedInUser }) => {
+        const userId = loggedInUser.userId;
+
+        createSearchHistory(word, userId);
+
+        const count: number = await client.searchHistory.count({
+          where: { userId: loggedInUser.userId },
+        });
+        // 검색 기록이 10개 초과 시 제일 오래된 값 삭제
+        if (count == 11) {
+          deleteSearchHisoty(userId);
+        }
+
+        return await client.product.findMany({
+          where: {
+            OR: [
+              { title: { contains: word } },
+              { content: { contains: word } },
+            ],
+          },
+          skip: lastId ? 1 : 0,
+          take: 20,
+          ...(lastId && { cursor: { id: lastId } }),
+        });
+      }
+    ),
+  },
+};
+```
+- createSearchHistory Mutation과 Type을 삭제
+- searchHistory 디렉터리 안에 utils를 만들어 검색 기록 생성 코드와 10개 초과 시 삭제 코드를 구현
