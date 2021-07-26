@@ -10,6 +10,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  ONGOING
+  SCHEDULED
+  COMPLETED
+}
+
 model User {
   userId             Int             @id @default(autoincrement())
   fullName           String
@@ -19,6 +30,7 @@ model User {
   password           String
   phoneNumber        String          @unique
   location           String?
+  role               Role            @default(USER)
   searchHistoryOnOff Boolean         @default(true)
   notificationOnOff  Boolean         @default(true)
   notifications      Notification[]
@@ -57,6 +69,7 @@ model Product {
   picture   String[]
   content   String?
   hits      Int       @default(0)
+  status    Status    @default(ONGOING)
   author    User      @relation(fields: [authorId], references: [userId])
   hashtags  Hashtag[]
   comments  Comment[]

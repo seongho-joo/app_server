@@ -10,10 +10,16 @@ export default gql`
     location: String
     avatar: String
     email: String!
+    role: Role!
     searchHistoryOnOf: Boolean!
     notificationOnOf: Boolean!
     searchHistories: [SearchHistory]
     createdAt: Date!
     updatedAt: Date!
+  }
+
+  enum Role {
+    ADMIN
+    USER
   }
 `;

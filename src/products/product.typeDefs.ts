@@ -11,6 +11,7 @@ export default gql`
     hits: Int!
     isMine: Boolean!
     content: String
+    status: Status!
     comments: [Comment]
     createdAt: Date!
     updatedAt: Date!
@@ -23,5 +24,11 @@ export default gql`
     totalPhotos: Int
     createdAt: Date!
     updatedAt: Date!
+  }
+
+  enum Status {
+    ONGOING
+    SCHEDULED
+    COMPLETED
   }
 `;
