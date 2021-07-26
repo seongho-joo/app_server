@@ -8,7 +8,7 @@ export default gql`
     author: User!
     prodcut: Product!
     isMine: Boolean!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;

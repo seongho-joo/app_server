@@ -7,7 +7,7 @@ export default gql`
     content: String!
     read: Boolean!
     user: User!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;

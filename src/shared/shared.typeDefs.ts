@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-core';
 
 export default gql`
   scalar Upload
+  scalar Date
 
   type Query {
     uploads: [File]

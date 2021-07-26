@@ -13,7 +13,7 @@ export default gql`
     searchHistoryOnOf: Boolean!
     notificationOnOf: Boolean!
     searchHistories: [SearchHistory]
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;

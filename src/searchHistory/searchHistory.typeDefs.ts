@@ -4,7 +4,7 @@ export default gql`
   type SearchHistory {
     id: Int!
     word: String!
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;

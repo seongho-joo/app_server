@@ -12,8 +12,8 @@ export default gql`
     isMine: Boolean!
     content: String
     comments: [Comment]
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 
   type Hashtag {
@@ -21,7 +21,7 @@ export default gql`
     hashtag: String!
     products(page: Int!): [Product]
     totalPhotos: Int
-    createdAt: String!
-    updatedAt: String!
+    createdAt: Date!
+    updatedAt: Date!
   }
 `;
