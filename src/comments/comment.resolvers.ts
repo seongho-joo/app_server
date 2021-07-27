@@ -8,6 +8,8 @@ const resolvers: Resolvers = {
       }
       return authorId === loggedInUser.userId;
     },
+    author: ({ authorId }, _, { client }) =>
+      client.user.findUnique({ where: { userId: authorId } }),
   },
 };
 
