@@ -12,7 +12,8 @@ export default gql`
     isMine: Boolean!
     content: String
     status: Status!
-    comments: [Comment]
+    commentsCount: Int!
+    comments(orderBy: String!, lastId: Int): [Comment]
     createdAt: Date!
     updatedAt: Date!
   }

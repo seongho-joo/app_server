@@ -10,8 +10,16 @@ const resolvers: Resolvers = {
       }
       return authorId === loggedInUser.userId;
     },
-    comments: ({ id }, _, { client }) =>
-      client.product.findUnique({ where: { id } }).comments(),
+    commentsCount: ({ id }, _, { client }) =>
+      client.product.count({ where: { id } }),
+    comments: ({ id }, { orderBy, lastId }, { client }) =>
+      client.comment.findMany({
+        where: { productId: id },
+        take: 10,
+        skip: lastId ? 1 : 0,
+        ...(lastId && { cursor: { id: lastId } }),
+        orderBy: { createdAt: orderBy },
+      }),
   },
 };
 
