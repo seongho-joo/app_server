@@ -16,8 +16,8 @@ enum Role {
 }
 
 enum Status {
+  WAITING
   ONGOING
-  SCHEDULED
   COMPLETED
 }
 
@@ -68,8 +68,9 @@ model Product {
   price     Int
   picture   String[]
   content   String?
+  hours     Int
   hits      Int       @default(0)
-  status    Status    @default(ONGOING)
+  status    Status    @default(WAITING)
   author    User      @relation(fields: [authorId], references: [userId])
   hashtags  Hashtag[]
   comments  Comment[]

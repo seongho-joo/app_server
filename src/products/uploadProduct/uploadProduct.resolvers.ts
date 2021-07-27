@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
     uploadProduct: protectedResolver(
       async (
         _,
-        { title, price, pictures, content, hashtags },
+        { title, price, hours, pictures, content, hashtags },
         { client, loggedInUser }
       ) => {
         let picturesUrl: string[] = [];
@@ -34,6 +34,7 @@ const resolvers: Resolvers = {
         }
         const product: Product | null = await client.product.create({
           data: {
+            hours,
             title,
             author: {
               connect: { userId: loggedInUser.userId },

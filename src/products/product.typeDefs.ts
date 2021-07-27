@@ -6,6 +6,7 @@ export default gql`
     author: User!
     title: String!
     price: Int!
+    hours: Int!
     picture: [String]
     hashtags: [Hashtag]
     hits: Int!
@@ -28,8 +29,8 @@ export default gql`
   }
 
   enum Status {
+    WAITING
     ONGOING
-    SCHEDULED
     COMPLETED
   }
 `;

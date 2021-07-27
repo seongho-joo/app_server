@@ -10,6 +10,7 @@ export default gql`
     uploadProduct(
       title: String!
       price: Int!
+      hours: Int!
       hashtags: [String]
       pictures: [Upload]
       content: String
