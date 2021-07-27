@@ -20,6 +20,10 @@ const resolvers: Resolvers = {
         ...(lastId && { cursor: { id: lastId } }),
         orderBy: { createdAt: orderBy },
       }),
+    hashtags: ({ id }, _, { client }) =>
+      client.hashtag.findMany({
+        where: { products: { some: { id } } },
+      }),
   },
 };
 
