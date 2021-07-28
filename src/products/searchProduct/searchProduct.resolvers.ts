@@ -11,14 +11,15 @@ const resolvers: Resolvers = {
       async (_, { word, lastId }, { client, loggedInUser }) => {
         const userId = loggedInUser.userId;
 
-        createSearchHistory(word, userId);
-
+        await createSearchHistory(word, userId);
+        //
         const count: number = await client.searchHistory.count({
           where: { userId: loggedInUser.userId },
+          orderBy: { updatedAt: 'asc' },
         });
         // 검색 기록이 10개 초과 시 제일 오래된 값 삭제
         if (count == 11) {
-          deleteSearchHisoty(userId);
+          await deleteSearchHisoty(userId);
         }
 
         return await client.product.findMany({

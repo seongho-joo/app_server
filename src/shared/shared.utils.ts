@@ -35,25 +35,29 @@ export const uploadToS3 = async (
 ) => {
   const { filename, createReadStream } = await file;
   const readStream = createReadStream();
-
   let objectName: string = `${dirName}/`;
+  // 특수문자 제거
+  const fileName: string = filename.replace(
+    /[\{\}\[\]\/?,;:|\)*~`!^\+<>@\#$%&\\\=\(\'\"]/g,
+    ''
+  );
   switch (dirName) {
     case 'avatars':
       if (loggedInUser) {
         objectName += `${loggedInUser.userId}_${loggedInUser.username}/${
           loggedInUser.userId
-        }_${Date.now()}_${filename}`;
+        }_${Date.now()}_${fileName}`;
       }
       break;
     case 'products':
       if (loggedInUser && title) {
         objectName += `${loggedInUser.userId}_${
           loggedInUser.username
-        }/${title}/${loggedInUser.userId}_${Date.now()}_${filename}`;
+        }/${title}/${loggedInUser.userId}_${Date.now()}_${fileName}`;
       }
       break;
     case 'banners':
-      objectName += `${Date.now()}_${filename}`;
+      objectName += `${Date.now()}_${fileName}`;
       break;
   }
 
