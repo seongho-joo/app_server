@@ -15,6 +15,9 @@
 - 배너 삭제할때 필요한 단일 오브젝트 삭제 구현
 - aws 리전 이름이 포함된 경우와 안된 경우를 나눠 url 값 변경
 - scala Date 추가 및 `createAt`,  `updateAt` 리턴 값 변경
+- 리스트 정렬 최신순으로 변경
+- 댓글 작성자 보기
+- 거래 상태 대기중, 진행중, 완료됨으로 수정
 
 ### 댓글 삭제
 ```ts
@@ -231,3 +234,40 @@ const resolvers: Resolvers = {
 ```
 - createSearchHistory Mutation과 Type을 삭제
 - searchHistory 디렉터리 안에 utils를 만들어 검색 기록 생성 코드와 10개 초과 시 삭제 코드를 구현
+
+### 댓글 수, 댓글 보기
+- 상품 상세보기를 했을 경우 와 리스트에서 댓글을 클릭했을 경우로 나눔
+```ts
+commentsCount: ({ id }, _, { client }) =>
+  client.product.count({ where: { id } }),
+comments: ({ id }, { orderBy, lastId }, { client }) =>
+  client.comment.findMany({
+    where: { productId: id },
+    take: 10,
+    skip: lastId ? 1 : 0,
+    ...(lastId && { cursor: { id: lastId } }),
+    orderBy: { createdAt: orderBy },
+}),
+
+const resolvers: Resolvers = {
+  Mutation: {
+    seeProductComments: async (_, { productId, lastId }, { client }) => {
+      // 메인 홈에서 댓글을 클릭했을 경우 댓글을 보여줌
+      return await client.comment.findMany({
+        where: { productId },
+        take: 10,
+        skip: lastId ? 1 : 0,
+        ...(lastId && { cursor: { id: lastId } }),
+        orderBy: { createdAt: 'asc' },
+      });
+    },
+  },
+};
+```
+
+### 시간 단위 추가 및 해시태그 보기
+```ts
+hashtags: ({ id }, _, { client }) =>
+  client.hashtag.findMany({
+    where: { products: { some: { id } } },
+```
