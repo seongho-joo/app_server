@@ -24,6 +24,8 @@ const resolvers: Resolvers = {
       client.hashtag.findMany({
         where: { products: { some: { id } } },
       }),
+    interests: ({ id }, _, { client }) =>
+      client.interest.count({ where: { productId: id } }),
   },
 };
 
