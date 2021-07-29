@@ -13,6 +13,7 @@ export default gql`
     isMine: Boolean!
     content: String
     status: Status!
+    interests: Int!
     commentsCount: Int!
     comments(orderBy: String!, lastId: Int): [Comment]
     createdAt: Date!
@@ -24,6 +25,13 @@ export default gql`
     hashtag: String!
     products(page: Int!): [Product]
     totalPhotos: Int
+    createdAt: Date!
+    updatedAt: Date!
+  }
+
+  type Interest {
+    id: Int!
+    prodcut: Product!
     createdAt: Date!
     updatedAt: Date!
   }

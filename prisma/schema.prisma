@@ -37,6 +37,7 @@ model User {
   searchHistories    SearchHistory[]
   products           Product[]
   comments           Comment[]
+  interests          Interest[]
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
 }
@@ -62,20 +63,33 @@ model SearchHistory {
 }
 
 model Product {
-  id        Int       @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   authorId  Int
   title     String
   price     Int
   picture   String[]
-  content   String?
+  content   String
   hours     Int
-  hits      Int       @default(0)
-  status    Status    @default(WAITING)
-  author    User      @relation(fields: [authorId], references: [userId])
+  hits      Int        @default(0)
+  status    Status     @default(WAITING)
+  author    User       @relation(fields: [authorId], references: [userId])
   hashtags  Hashtag[]
   comments  Comment[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  interests Interest[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Interest {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [userId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([productId, userId])
 }
 
 model Hashtag {
