@@ -11,6 +11,7 @@ const resolvers: Resolvers = {
         { title, price, hours, pictures, content, hashtags },
         { client, loggedInUser }
       ) => {
+        const { userId } = loggedInUser;
         let picturesUrl: string[] = [];
         if (pictures) {
           picturesUrl = await Promise.all(
@@ -37,7 +38,7 @@ const resolvers: Resolvers = {
             hours,
             title,
             author: {
-              connect: { userId: loggedInUser.userId },
+              connect: { userId },
             },
             content,
             ...(picturesUrl && { picture: picturesUrl }),

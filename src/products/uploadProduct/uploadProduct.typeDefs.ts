@@ -13,7 +13,7 @@ export default gql`
       hours: Int!
       hashtags: [String]
       pictures: [Upload]
-      content: String
+      content: String!
     ): uploadProductResult!
   }
 `;

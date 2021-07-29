@@ -6,6 +6,7 @@ const resolvers: Resolvers = {
   Mutation: {
     editComment: protectedResolver(
       async (_, { id, payload }, { client, loggedInUser }) => {
+        const { userId } = loggedInUser;
         const comment: Comment | null = await client.comment.findUnique({
           where: { id },
         });
@@ -15,7 +16,7 @@ const resolvers: Resolvers = {
             error: '댓글이 존재하지 않음',
           };
         }
-        if (loggedInUser.userId !== comment.authorId) {
+        if (userId !== comment.authorId) {
           return {
             ok: false,
             error: '권한이 없음',

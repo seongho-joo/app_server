@@ -8,6 +8,7 @@ const resolvers: Resolvers = {
   Mutation: {
     deleteProduct: protectedResolver(
       async (_, { id }, { client, loggedInUser }) => {
+        const { userId } = loggedInUser;
         const exProduct: Product | null = await client.product.findUnique({
           where: { id },
         });
@@ -17,7 +18,7 @@ const resolvers: Resolvers = {
             error: '물품이 존재하지 않음',
           };
         }
-        if (exProduct.authorId !== loggedInUser.userId) {
+        if (exProduct.authorId !== userId) {
           return {
             ok: false,
             error: '권한이 없음',
