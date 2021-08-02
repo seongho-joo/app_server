@@ -9,13 +9,13 @@ export default gql`
     hours: Int!
     picture: [String]
     hashtags: [Hashtag]
-    hits: Int!
+    hits: Int! # 조회수
     isMine: Boolean!
-    content: String
-    status: Status!
-    interests: Int!
-    commentsCount: Int!
-    comments(orderBy: String!, lastId: Int): [Comment]
+    content: String # 내용
+    status: Status! # 거래 상태
+    interests: Int! # 관심 수
+    commentsCount: Int! # 댓글 수
+    comments(orderBy: String!, lastId: Int): [Comment] # 댓글보기
     createdAt: Date!
     updatedAt: Date!
   }
