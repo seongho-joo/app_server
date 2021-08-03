@@ -77,3 +77,27 @@ const resolvers: Resolvers = {
 ```
 </details>
   
+### pm2 무중단 배포 테스트 후 배포서버에 적용
+pm2 모드를 `cluster`로 실행하기 위해 `ecosystem.config.js`를 생성
+<details>
+<summary> 코드 </summary>
+
+```js
+module.exports = {
+  apps: [
+    {
+      name: 'server',
+      script: 'src/server.ts',
+      instances: 0,
+      exec_mode: 'cluster',
+      wait_ready: true,
+      listen_timeout: 50000,
+      kill_timeout: 5000,
+    },
+  ],
+};
+
+```
+</details>
+
+[PM2를 활용한 Node.js 무중단 서비스하기](https://engineering.linecorp.com/ko/blog/pm2-nodejs/) 를 참고함
