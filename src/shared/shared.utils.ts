@@ -84,7 +84,7 @@ export const deleteObjectsS3 = async (file: string[] | string) => {
     const Objects = await Promise.all(
       file.map(async (item: string) => {
         const keyName: string[] = item.split(url);
-        return { Key: keyName[1] };
+        return { Key: decodeURI(keyName[1]) };
       })
     );
     const param: DeleteObjectsRequest = {
@@ -104,7 +104,7 @@ export const deleteObjectsS3 = async (file: string[] | string) => {
     const Key: string[] = file.split(url);
     const param: DeleteObjectRequest = {
       Bucket,
-      Key: Key[1],
+      Key: decodeURI(Key[1]),
     };
     await new AWS.S3().deleteObject(param).promise();
   }

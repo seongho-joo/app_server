@@ -1,5 +1,4 @@
 import { Comment, Product } from '@prisma/client';
-import { DeleteObjectsRequest } from 'aws-sdk/clients/s3';
 import { deleteObjectsS3 } from '../../shared/shared.utils';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
