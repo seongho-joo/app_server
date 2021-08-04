@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
         }
         let imageUrl: string = '';
         if (image) {
-          imageUrl = await uploadToS3(image, 'notices', loggedInUser, title);
+          imageUrl = await uploadToS3(image, 'notices', _, title);
         }
         await client.notice.create({
           data: {

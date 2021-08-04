@@ -34,6 +34,12 @@ export const uploadToS3 = async (
   title?: string
 ) => {
   const { filename, createReadStream } = await file;
+  let userId: number = 0;
+  let username: string = '';
+  if (loggedInUser) {
+    userId = loggedInUser.userId;
+    username = loggedInUser.username;
+  }
   const readStream = createReadStream();
   let objectName: string = `${dirName}/`;
   // 특수문자 제거
@@ -43,24 +49,18 @@ export const uploadToS3 = async (
   );
   switch (dirName) {
     case 'avatars':
-      if (loggedInUser) {
-        objectName += `${loggedInUser.userId}_${loggedInUser.username}/${
-          loggedInUser.userId
-        }_${Date.now()}_${fileName}`;
-      }
+      objectName += `${userId}_${username}/${userId}_${Date.now()}_${fileName}`;
       break;
     case 'products':
-      if (loggedInUser && title) {
-        objectName += `${loggedInUser.userId}_${
-          loggedInUser.username
-        }/${title}/${loggedInUser.userId}_${Date.now()}_${fileName}`;
-      }
+      objectName += `${userId}_${username}/${title}/${userId}_${Date.now()}_${fileName}`;
       break;
     case 'banners':
       objectName += `${Date.now()}_${fileName}`;
       break;
+    case 'notices':
+      objectName += `${title}/${Date.now()}_${fileName}`;
+      break;
   }
-
   const { Location } = await new AWS.S3()
     .upload({
       Bucket,
