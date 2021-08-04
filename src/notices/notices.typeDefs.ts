@@ -7,7 +7,7 @@ export default gql`
     admin: User
     title: String!
     content: String!
-    image: Upload
+    image: String
     sortation: Sortation! # 공지사항, 이벤트 구분
     createdAt: Date!
     updatedAt: Date!
