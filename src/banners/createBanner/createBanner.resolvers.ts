@@ -1,4 +1,4 @@
-import { uploadToS3 } from '../../shared/shared.utils';
+import { Dir, uploadToS3 } from '../../shared/shared.utils';
 import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
@@ -7,7 +7,7 @@ const resolvers: Resolvers = {
       if (!file) {
         return { ok: false, error: '이미지가 없음' };
       }
-      const fileUrl: string = await uploadToS3(file, 'banners');
+      const fileUrl: string = await uploadToS3(file, Dir.BANNER);
       await client.banner.create({ data: { file: fileUrl } });
       return { ok: true };
     },

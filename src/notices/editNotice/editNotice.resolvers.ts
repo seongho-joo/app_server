@@ -1,4 +1,4 @@
-import { deleteObjectsS3, uploadToS3 } from '../../shared/shared.utils';
+import { deleteObjectsS3, Dir, uploadToS3 } from '../../shared/shared.utils';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
@@ -25,7 +25,7 @@ const resolvers: Resolvers = {
           if (image) {
             await deleteObjectsS3(image);
           }
-          imageUrl = await uploadToS3(Image, 'notices', _, title);
+          imageUrl = await uploadToS3(Image, Dir.NOTICE, _, title);
         }
 
         await client.notice.update({

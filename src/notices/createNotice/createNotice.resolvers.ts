@@ -1,4 +1,4 @@
-import { uploadToS3 } from './../../shared/shared.utils';
+import { Dir, uploadToS3 } from './../../shared/shared.utils';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
@@ -16,7 +16,7 @@ const resolvers: Resolvers = {
         }
         let imageUrl: string = '';
         if (image) {
-          imageUrl = await uploadToS3(image, 'notices', _, title);
+          imageUrl = await uploadToS3(image, Dir.NOTICE, _, title);
         }
         await client.notice.create({
           data: {

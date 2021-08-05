@@ -1,5 +1,5 @@
 import { Product } from '@prisma/client';
-import { uploadToS3 } from '../../shared/shared.utils';
+import { uploadToS3, Dir } from '../../shared/shared.utils';
 import { File, Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
@@ -18,7 +18,7 @@ const resolvers: Resolvers = {
             pictures.map(async (file: File) => {
               const location: string = await uploadToS3(
                 file,
-                'products',
+                Dir.PRODUCT,
                 loggedInUser,
                 title
               );

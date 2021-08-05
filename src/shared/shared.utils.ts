@@ -29,7 +29,7 @@ AWS.config.update({
 
 export const uploadToS3 = async (
   file: File,
-  dirName: string,
+  dirName: Dir,
   loggedInUser?: User,
   title?: string
 ) => {
@@ -109,3 +109,10 @@ export const deleteObjectsS3 = async (file: string[] | string) => {
     await new AWS.S3().deleteObject(param).promise();
   }
 };
+
+export enum Dir {
+  AVATAR = 'avatars',
+  PRODUCT = 'products',
+  BANNER = 'banners',
+  NOTICE = 'notices',
+}
