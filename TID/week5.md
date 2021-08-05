@@ -2,6 +2,8 @@
 - filename 특수문자 제거
 - `userId` 비구조화 할당
 - S3 url decoding
+- user profile 아바타 변경 시 S3에 있는 파일 삭제 구현
+- S3 dirName 매개변수 열거형으로 바꿈
 
 ### Computed fields
 - Product
@@ -140,7 +142,7 @@ const resolvers: Resolvers = {
 ```
 </details>
 
-공지사항 삭제
+공지사항 및 이벤트 삭제
 <details>
 <summary> &nbsp;코드 </summary>
 
@@ -168,6 +170,54 @@ const resolvers: Resolvers = {
         }
 
         await client.notice.delete({ where: { id } });
+        return { ok: true };
+      }
+    ),
+  },
+};
+```
+</details>
+
+공지사항 및 이벤트 수정
+<details>
+<summary> &nbsp;코드 </summary>
+
+```ts
+const resolvers: Resolvers = {
+  Mutation: {
+    editNotice: protectedResolver(
+      async (_, { id, Title, content, Image }, { client, loggedInUser }) => {
+        const { role } = loggedInUser;
+        if (role !== 'ADMIN') {
+          return { ok: false, error: '권한이 없음' };
+        }
+
+        const notice = await client.notice.findUnique({
+          where: { id },
+        });
+        if (!notice) {
+          return { ok: false, error: '존재하지 않음' };
+        }
+
+        const { image, title } = notice;
+        let imageUrl: string = '';
+        // 변경할 이미지와 이미지가 존재할 경우 s3 오브젝트 삭제
+        if (Image) {
+          if (image) {
+            await deleteObjectsS3(image);
+          }
+          imageUrl = await uploadToS3(Image, 'notices', _, title);
+        }
+
+        await client.notice.update({
+          where: { id },
+          data: {
+            ...(Title && { title: Title }),
+            ...(content && { content }),
+            ...(Image && { image: imageUrl }),
+          },
+        });
+
         return { ok: true };
       }
     ),
