@@ -11,6 +11,8 @@
 <details>
 <summary>Todo List</summary>
 
+- API
+  - [ ] email 인증 구현
 - 회원가입
   - [x] phone & email 회원 가입
   - [x] username 중복 확인
@@ -57,7 +59,7 @@
   - [x] 등록
   - [x] 삭제
   - [x] 보기
-  - [ ] 수정
+  - [x] 수정 (사진 변경 x)
   - [ ] 리스트
 - 고객센터
   - [ ] FAQ
