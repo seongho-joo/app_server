@@ -1,9 +1,13 @@
+### 개발 서버 lightsail로 바꿈
+
 ### Refactoring
 - filename 특수문자 제거
 - `userId` 비구조화 할당
 - S3 url decoding
 - user profile 아바타 변경 시 S3에 있는 파일 삭제 구현
 - S3 dirName 매개변수 열거형으로 바꿈
+- 여러 장의 사진을 업로드할때 중복되는 코드를 함수로 바꿈
+- `uploadToS3`함수에 `filname`이나 `title`에 공백이 포함될 시 제거하거나 '_' 로 치환
 
 ### Computed fields
 - Product
@@ -53,6 +57,25 @@ const resolvers: Resolvers = {
       }
       return notice;
     },
+  },
+};
+```
+</details>
+
+공지사항 및 이벤트 리스트 보기
+<details>
+<summary> &nbsp;코드 </summary>
+
+```ts
+const resolvers: Resolvers = {
+  Query: {
+    seeNoticeList: (_, { lastId, sortation }, { client }) =>
+      client.notice.findMany({
+        where: { sortation },
+        skip: lastId ? 1 : 0,
+        take: 10,
+        ...(lastId && { cursor: { id: lastId } }),
+      }),
   },
 };
 ```
