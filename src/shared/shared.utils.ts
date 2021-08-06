@@ -44,9 +44,12 @@ export const uploadToS3 = async (
   let objectName: string = `${dirName}/`;
   // 특수문자 제거
   const fileName: string = filename.replace(
-    /[\{\}\[\]\/?,;:|\)*~`!^\+<>@\#$%&\\\=\(\'\"]/g,
+    /[\{\}\[\]\/?,;:|\)*~`!^\+<>@\#$%&\\\=\(\'\"\s]/g,
     ''
   );
+  if (title) {
+    title = title.replace(/\s/g, '_');
+  }
   switch (dirName) {
     case 'avatars':
       objectName += `${userId}_${username}/${userId}_${Date.now()}_${fileName}`;
