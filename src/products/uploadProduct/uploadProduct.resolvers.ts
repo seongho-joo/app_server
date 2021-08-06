@@ -2,6 +2,7 @@ import { Product } from '@prisma/client';
 import { uploadToS3, Dir } from '../../shared/shared.utils';
 import { File, Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
+import { getS3Location } from '../product.utils';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -14,17 +15,7 @@ const resolvers: Resolvers = {
         const { userId } = loggedInUser;
         let picturesUrl: string[] = [];
         if (pictures) {
-          picturesUrl = await Promise.all(
-            pictures.map(async (file: File) => {
-              const location: string = await uploadToS3(
-                file,
-                Dir.PRODUCT,
-                loggedInUser,
-                title
-              );
-              return location;
-            })
-          );
+          picturesUrl = await getS3Location(pictures, loggedInUser, title);
         }
         let hashtagObj = [];
         if (hashtags) {
