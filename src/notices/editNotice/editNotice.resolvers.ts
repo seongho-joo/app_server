@@ -18,14 +18,14 @@ const resolvers: Resolvers = {
           return { ok: false, error: '존재하지 않음' };
         }
 
-        const { image, title } = notice;
+        const { image } = notice;
         let imageUrl: string = '';
         // 변경할 이미지와 이미지가 존재할 경우 s3 오브젝트 삭제
         if (Image) {
           if (image) {
             await deleteObjectsS3(image);
           }
-          imageUrl = await uploadToS3(Image, Dir.NOTICE, _, title);
+          imageUrl = await uploadToS3(Image, Dir.NOTICE, _, id);
         }
 
         await client.notice.update({

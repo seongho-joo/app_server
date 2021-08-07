@@ -1,13 +1,14 @@
 ### 개발 서버 lightsail로 바꿈
 
 ### Refactoring
-- filename 특수문자 제거
+- ~~filename 특수문자 제거~~
 - `userId` 비구조화 할당
-- S3 url decoding
+- ~~S3 url decoding~~
 - user profile 아바타 변경 시 S3에 있는 파일 삭제 구현
 - S3 dirName 매개변수 열거형으로 바꿈
 - 여러 장의 사진을 업로드할때 중복되는 코드를 함수로 바꿈
-- `uploadToS3`함수에 `filname`이나 `title`에 공백이 포함될 시 제거하거나 '_' 로 치환
+- ~~`uploadToS3`함수에 `filname`이나 `title`에 공백이 포함될 시 제거하거나 '_' 로 치환~~
+- S3 url 경로 수정 및 `filname`을 `Date.now()`로 변경
 
 ### Computed fields
 - Product

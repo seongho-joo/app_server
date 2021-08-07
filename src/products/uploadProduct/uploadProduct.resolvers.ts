@@ -14,9 +14,6 @@ const resolvers: Resolvers = {
       ) => {
         const { userId } = loggedInUser;
         let picturesUrl: string[] = [];
-        if (pictures) {
-          picturesUrl = await getS3Location(pictures, loggedInUser, title);
-        }
         let hashtagObj = [];
         if (hashtags) {
           hashtagObj = hashtags.map((item: string) => ({
@@ -24,7 +21,7 @@ const resolvers: Resolvers = {
             create: { hashtag: item },
           }));
         }
-        const product: Product | null = await client.product.create({
+        const { id } = await client.product.create({
           data: {
             hours,
             title,
@@ -32,11 +29,22 @@ const resolvers: Resolvers = {
               connect: { userId },
             },
             content,
-            ...(picturesUrl && { picture: picturesUrl }),
             price,
             ...(hashtagObj.length > 0 && {
               hashtags: { connectOrCreate: hashtagObj },
             }),
+          },
+        });
+        if (pictures) {
+          if (pictures.length > 5) {
+            return { ok: false, error: '사진 수 초과' };
+          }
+          picturesUrl = await getS3Location(pictures, loggedInUser, id);
+        }
+        const product: Product = await client.product.update({
+          where: { id },
+          data: {
+            ...(picturesUrl && { picture: picturesUrl }),
           },
         });
         return {

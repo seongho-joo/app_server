@@ -1,6 +1,6 @@
 import { Product } from '@prisma/client';
 import { deleteObjectsS3, Dir, uploadToS3 } from '../../shared/shared.utils';
-import { File, Resolvers } from '../../types';
+import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 import { getS3Location } from '../product.utils';
 
@@ -32,11 +32,7 @@ const resolvers: Resolvers = {
         let location: string[] = [];
         // 추가하려는 사진이 있을 경우
         if (newPictures) {
-          location = await getS3Location(
-            newPictures,
-            loggedInUser,
-            product.title
-          );
+          location = await getS3Location(newPictures, loggedInUser, product.id);
         }
 
         picture = picture.concat(location);

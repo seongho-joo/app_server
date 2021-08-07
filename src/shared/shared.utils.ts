@@ -31,37 +31,31 @@ export const uploadToS3 = async (
   file: File,
   dirName: Dir,
   loggedInUser?: User,
-  title?: string
+  identity?: number
 ) => {
-  const { filename, createReadStream } = await file;
+  let { filename, createReadStream } = await file;
   let userId: number = 0;
-  let username: string = '';
+
   if (loggedInUser) {
     userId = loggedInUser.userId;
-    username = loggedInUser.username;
   }
+  const extension: string | undefined = filename.split('.').pop();
+  filename = `${Date.now()}.${extension}`;
   const readStream = createReadStream();
   let objectName: string = `${dirName}/`;
-  // 특수문자 제거
-  const fileName: string = filename.replace(
-    /[\{\}\[\]\/?,;:|\)*~`!^\+<>@\#$%&\\\=\(\'\"\s]/g,
-    ''
-  );
-  if (title) {
-    title = title.replace(/\s/g, '_');
-  }
+
   switch (dirName) {
     case 'avatars':
-      objectName += `${userId}_${username}/${userId}_${Date.now()}_${fileName}`;
+      objectName += `${userId}/${filename}`;
       break;
     case 'products':
-      objectName += `${userId}_${username}/${title}/${userId}_${Date.now()}_${fileName}`;
+      objectName += `${identity}/${filename}`;
       break;
     case 'banners':
-      objectName += `${Date.now()}_${fileName}`;
+      objectName += `${filename}`;
       break;
     case 'notices':
-      objectName += `${title}/${Date.now()}_${fileName}`;
+      objectName += `${identity}/${filename}`;
       break;
   }
   const { Location } = await new AWS.S3()
