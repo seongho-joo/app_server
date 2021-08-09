@@ -250,6 +250,66 @@ const resolvers: Resolvers = {
 ```
 </details>
 
+<details>
+<summary> &nbsp;코드 </summary>
+
+```ts
+const resolvers: Resolvers = {
+  Mutation: {
+    withdrawalAccount: protectedResolver(
+      async (_, __, { client, loggedInUser }) => {
+        const { userId } = loggedInUser;
+        const user: User | null = await client.user.findUnique({
+          where: { userId },
+        });
+        const comments = await client.comment.findFirst({
+          where: { authorId: userId },
+          select: { id: true },
+        });
+        const products = await client.product.findMany({
+          where: { authorId: userId },
+        });
+
+        if (!user) {
+          return { ok: false, error: '사용자가 존재하지 않음' };
+        }
+        // 프로필 사진이 존재할 경우 S3 오브젝트 삭제
+        if (user.avatar) {
+          await deleteObjectsS3(user.avatar);
+        }
+
+        if (products) {
+          products.forEach(async (item: Product) => {
+            const { id, picture } = item;
+            const comment = await client.comment.findFirst({
+              where: { productId: id },
+            });
+            // 사용자가 작성한 상품에 댓글이 있으면 삭제
+            if (comment) {
+              await client.comment.deleteMany({ where: { productId: id } });
+            }
+            if (picture.length !== 0) {
+              await deleteObjectsS3(picture);
+            }
+          });
+          // 사용자가 작성한 상품들 삭제
+          await client.product.deleteMany({ where: { authorId: userId } });
+        }
+        // 사용자가 작성한 댓글들 삭제
+        if (comments) {
+          await client.comment.deleteMany({ where: { authorId: userId } });
+        }
+
+        await client.user.delete({ where: { userId } });
+
+        return { ok: true };
+      }
+    ),
+  },
+};
+```
+</details>
+
 ### pm2 무중단 배포 테스트 후 배포서버에 적용
 pm2 모드를 `cluster`로 실행하기 위해 `ecosystem.config.js`를 생성
 <details>
