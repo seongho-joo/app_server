@@ -310,6 +310,33 @@ const resolvers: Resolvers = {
 ```
 </details>
 
+휴대폰 번호 변경
+### schema prisma
+<details>
+<summary> &nbsp;코드 </summary>
+
+```ts
+const resolvers: Resolvers = {
+  Mutation: {
+    editAccount: protectedResolver(
+      async (_, { phoneNumber }, { client, loggedInUser }) => {
+        const { userId } = loggedInUser;
+        const user: Identity | null = await client.user.findUnique({
+          where: { phoneNumber },
+          select: { userId: true },
+        });
+        if (user) {
+          return { ok: false, error: '이미 존재하는 번호입니다.' };
+        }
+        await client.user.update({ where: { userId }, data: { phoneNumber } });
+        return { ok: true };
+      }
+    ),
+  },
+};
+```
+</details>
+
 ### pm2 무중단 배포 테스트 후 배포서버에 적용
 pm2 모드를 `cluster`로 실행하기 위해 `ecosystem.config.js`를 생성
 <details>
