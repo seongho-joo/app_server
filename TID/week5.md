@@ -250,6 +250,7 @@ const resolvers: Resolvers = {
 ```
 </details>
 
+  휴대폰 번호 변경
 <details>
 <summary> &nbsp;코드 </summary>
 
@@ -310,7 +311,6 @@ const resolvers: Resolvers = {
 ```
 </details>
 
-휴대폰 번호 변경
 ### schema prisma
 <details>
 <summary> &nbsp;코드 </summary>
