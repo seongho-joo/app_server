@@ -6,8 +6,13 @@ import { User } from '@prisma/client';
 const resolvers: Resolvers = {
   Mutation: {
     editProfile: protectedResolver(
-      async (_, { username, location, avatar }, { client, loggedInUser }) => {
+      async (
+        _,
+        { username, location, avatar, removeAvatar },
+        { client, loggedInUser }
+      ) => {
         const { userId } = loggedInUser;
+        const { DEFAULT_IMG } = process.env;
         const user: User | null = await client.user.findUnique({
           where: { userId },
         });
@@ -29,12 +34,18 @@ const resolvers: Resolvers = {
           }
           avatarUrl = await uploadToS3(avatar, Dir.AVATAR, loggedInUser);
         }
+        if (removeAvatar) {
+          await deleteObjectsS3(removeAvatar);
+          if (DEFAULT_IMG) {
+            avatarUrl = DEFAULT_IMG;
+          }
+        }
         await client.user.update({
           where: { userId },
           data: {
             ...(username && { username }),
             ...(location && { location }),
-            ...(avatarUrl && { avatar: avatarUrl }),
+            avatar: avatarUrl,
           },
         });
         return {

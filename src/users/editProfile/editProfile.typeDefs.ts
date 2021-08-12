@@ -6,6 +6,7 @@ export default gql`
       username: String
       location: String
       avatar: Upload
+      removeAvatar: String
     ): MutationResponse!
   }
 `;

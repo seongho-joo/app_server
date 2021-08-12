@@ -16,6 +16,7 @@ const resolvers: Resolvers = {
           password: hash,
           email,
           phoneNumber,
+          avatar: process.env.DEAULT_IMG,
         },
       });
       return { ok: true };
