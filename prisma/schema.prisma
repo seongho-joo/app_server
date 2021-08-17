@@ -38,6 +38,8 @@ model User {
   role               Role            @default(USER)
   searchHistoryOnOff Boolean         @default(true)
   notificationOnOff  Boolean         @default(true)
+  blocking           User[]          @relation("FollowRelation", references: [userId]) // 차단 하려는 유저
+  blocker            User[]          @relation("FollowRelation", references: [userId]) // 차단 당하는 유저
   notifications      Notification[]
   searchHistories    SearchHistory[]
   products           Product[]

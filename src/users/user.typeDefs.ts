@@ -11,6 +11,8 @@ export default gql`
     avatar: String
     email: String!
     role: Role!
+    blocking: [User]
+    isBlocking: Boolean!
     searchHistoryOnOf: Boolean!
     notificationOnOf: Boolean!
     searchHistories: [SearchHistory]
