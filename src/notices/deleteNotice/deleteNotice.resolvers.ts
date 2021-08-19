@@ -1,5 +1,5 @@
 import { deleteObjectsS3 } from '../../shared/shared.utils';
-import { Identity, Resolvers } from '../../types';
+import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
 const resolvers: Resolvers = {

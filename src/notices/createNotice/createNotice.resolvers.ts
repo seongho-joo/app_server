@@ -1,7 +1,6 @@
 import { Dir, uploadToS3 } from './../../shared/shared.utils';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
-import { Notice } from '@prisma/client';
 
 const resolvers: Resolvers = {
   Mutation: {
