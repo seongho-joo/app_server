@@ -1,4 +1,3 @@
-import { Product } from '@prisma/client';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../user.utils';
 
