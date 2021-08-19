@@ -1,9 +1,6 @@
 import { User } from '@prisma/client';
 import * as AWS from 'aws-sdk';
-import S3, {
-  DeleteObjectRequest,
-  DeleteObjectsRequest,
-} from 'aws-sdk/clients/s3';
+import { DeleteObjectRequest, DeleteObjectsRequest } from 'aws-sdk/clients/s3';
 import { File } from '../types';
 
 const accessKeyId: string | undefined = process.env.AWS_S3_KEY;
@@ -27,6 +24,17 @@ AWS.config.update({
   },
 });
 
+const checkUrl = (url: string) => {
+  let ret: string = '';
+  if (url.lastIndexOf('ap-northeast-2') === -1) {
+    ret = 'https://majgo-uploads.s3.amazonaws.com/';
+  } else {
+    ret = 'https://majgo-uploads.s3.ap-northeast-2.amazonaws.com/';
+  }
+
+  return ret;
+};
+
 export const uploadToS3 = async (
   file: File,
   dirName: Dir,
@@ -34,11 +42,6 @@ export const uploadToS3 = async (
   identity?: number
 ) => {
   let { filename, createReadStream } = await file;
-  let userId: number = 0;
-
-  if (loggedInUser) {
-    userId = loggedInUser.userId;
-  }
   const extension: string | undefined = filename.split('.').pop();
   filename = `${Date.now()}.${extension}`;
   const readStream = createReadStream();
@@ -46,6 +49,10 @@ export const uploadToS3 = async (
 
   switch (dirName) {
     case 'avatars':
+      if (!loggedInUser) {
+        throw new Error('유저가 존재하지않음');
+      }
+      const { userId } = loggedInUser;
       objectName += `${userId}/${filename}`;
       break;
     case 'products':
@@ -73,11 +80,7 @@ export const deleteObjectsS3 = async (file: string[] | string) => {
   let url: string = '';
   if (Array.isArray(file)) {
     // 여러 오브젝트 삭제
-    if (file[0].lastIndexOf('ap-northeast-2') === -1) {
-      url = 'https://majgo-uploads.s3.amazonaws.com/';
-    } else {
-      url = 'https://majgo-uploads.s3.ap-northeast-2.amazonaws.com/';
-    }
+    url = checkUrl(file[0]);
     const Objects = await Promise.all(
       file.map(async (item: string) => {
         const keyName: string[] = item.split(url);
@@ -93,11 +96,7 @@ export const deleteObjectsS3 = async (file: string[] | string) => {
     await new AWS.S3().deleteObjects(param).promise();
   } else {
     // 단일 오브젝트 삭제
-    if (file.lastIndexOf('ap-northeast-2') === -1) {
-      url = 'https://majgo-uploads.s3.amazonaws.com/';
-    } else {
-      url = 'https://majgo-uploads.s3.ap-northeast-2.amazonaws.com/';
-    }
+    url = checkUrl(file);
     const Key: string[] = file.split(url);
     const param: DeleteObjectRequest = {
       Bucket,
