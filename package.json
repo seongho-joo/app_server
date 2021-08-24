@@ -24,7 +24,9 @@
     "graphql-tools": "^7.0.4",
     "graphql-upload": "^11.0.0",
     "jsonwebtoken": "^8.5.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.6.3",
+    "nodemailer-smtp-transport": "^2.7.4"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -32,6 +34,8 @@
     "@types/graphql-upload": "^8.0.6",
     "@types/jsonwebtoken": "^8.5.4",
     "@types/morgan": "^1.9.3",
+    "@types/nodemailer": "^6.4.4",
+    "@types/nodemailer-smtp-transport": "^2.7.5",
     "nodemon": "^2.0.7",
     "prisma": "^2.20.1",
     "ts-node": "^10.2.0"
