@@ -12,7 +12,7 @@
 <summary>Todo List</summary>
 
 - API
-  - [x] email 인증 구현
+  - [x] email 인증 구현 [테스트]
 - 회원가입
   - [x] phone & email 회원 가입
   - [x] username 중복 확인
