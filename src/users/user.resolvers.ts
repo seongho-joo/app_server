@@ -14,6 +14,27 @@ const resolvers: Resolvers = {
       });
       return Boolean(user);
     },
+    waitingProductCount: ({ userId }, _, { client }) =>
+      client.product.count({
+        where: {
+          authorId: userId,
+          status: 'WAITING',
+        },
+      }),
+    ongoingProductCount: ({ userId }, _, { client }) =>
+      client.product.count({
+        where: {
+          authorId: userId,
+          status: 'ONGOING',
+        },
+      }),
+    completedProductCount: ({ userId }, _, { client }) =>
+      client.product.count({
+        where: {
+          authorId: userId,
+          status: 'COMPLETED',
+        },
+      }),
   },
 };
 

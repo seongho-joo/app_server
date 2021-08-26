@@ -13,6 +13,9 @@ export default gql`
     role: Role! # 권한
     blocking: [User] # 차단한 유저
     isBlocking: Boolean! # 차단한 유저인지 판별
+    waitingProductCount: Int! # 빌림 상품 수
+    ongoingProductCount: Int! # 빌려드림 상품 수
+    completedProductCount: Int! # 거래완료된 상품 수
     createdAt: Date!
     updatedAt: Date!
   }
