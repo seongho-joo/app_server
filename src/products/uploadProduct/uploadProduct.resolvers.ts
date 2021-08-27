@@ -36,7 +36,7 @@ const resolvers: Resolvers = {
           },
         });
         if (pictures) {
-          if (pictures.length > 5) {
+          if (pictures.length > 10) {
             return { ok: false, error: '사진 수 초과' };
           }
           picturesUrl = await getS3Location(pictures, loggedInUser, id);
