@@ -38,3 +38,61 @@ const resolvers: Resolvers = {
 };
 ```
 </details>
+
+## 📲 &nbsp;&nbsp;Computed Field
+- 프로필 거래현황
+<details>
+<summary> &nbsp;코드 </summary>
+
+```ts
+const resolvers: Resolvers = {
+  User: {
+    
+    ...
+
+    waitingProductCount: ({ userId }, _, { client }) =>
+      client.product.count({
+        where: {
+          authorId: userId,
+          status: 'WAITING',
+        },
+      }),
+    ongoingProductCount: ({ userId }, _, { client }) =>
+      client.product.count({
+        where: {
+          authorId: userId,
+          status: 'ONGOING',
+        },
+      }),
+    completedProductCount: ({ userId }, _, { client }) =>
+      client.product.count({
+        where: {
+          authorId: userId,
+          status: 'COMPLETED',
+        },
+      }),
+  },
+};
+```
+</details>
+
+## 📃 &nbsp;&nbsp;Qeury
+- 내 게시물 보기
+<details>
+<summary> &nbsp;코드 </summary>
+
+```ts
+const resolvers: Resolvers = {
+  Query: {
+    seeMyProducts: protectedResolver((_, { authorId, lastId }, { client }) =>
+      client.product.findMany({
+        where: { authorId },
+        take: 10,
+        skip: lastId ? 1 : 0,
+        ...(lastId && { cursor: { id: lastId } }),
+      })
+    ),
+  },
+};
+```
+</details>
