@@ -1,6 +1,5 @@
 import { Product } from '@prisma/client';
-import { uploadToS3, Dir } from '../../shared/shared.utils';
-import { File, Resolvers } from '../../types';
+import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 import { getS3Location } from '../product.utils';
 
