@@ -23,7 +23,7 @@ export const createSearchHistory = async (word: string, userId: number) => {
         id: exWord.id,
       },
       data: {
-        word,
+        updatedAt: new Date(),
       },
     });
   } else {
