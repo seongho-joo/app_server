@@ -22,6 +22,7 @@ export default gql`
     writerId: Int! # 후기 작성자
     productId: Int! # 상품
     content: String! # 물품 후기 내용
+    hide: Boolean!
     createdAt: Date!
     updatedAt: Date!
   }
