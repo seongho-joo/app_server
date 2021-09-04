@@ -10,16 +10,6 @@ const resolvers: Resolvers = {
       }
       return authorId === loggedInUser.userId;
     },
-    commentsCount: ({ id }, _, { client }) =>
-      client.product.count({ where: { id } }),
-    comments: ({ id }, { orderBy, lastId }, { client }) =>
-      client.comment.findMany({
-        where: { productId: id },
-        take: 10,
-        skip: lastId ? 1 : 0,
-        ...(lastId && { cursor: { id: lastId } }),
-        orderBy: { createdAt: orderBy },
-      }),
     hashtags: ({ id }, _, { client }) =>
       client.hashtag.findMany({
         where: { products: { some: { id } } },

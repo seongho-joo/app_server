@@ -48,7 +48,6 @@ model User {
   notifications      Notification[]
   searchHistories    SearchHistory[]
   products           Product[]
-  comments           Comment[]
   interests          Interest[]
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
@@ -86,7 +85,6 @@ model Product {
   status    Status     @default(WAITING)
   author    User       @relation(fields: [authorId], references: [userId])
   hashtags  Hashtag[]
-  comments  Comment[]
   interests Interest[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -115,10 +113,8 @@ model Hashtag {
 model Comment {
   id        Int      @id @default(autoincrement())
   authorId  Int
-  productId Int
-  comment   String
-  author    User     @relation(fields: [authorId], references: [userId])
-  product   Product  @relation(fields: [productId], references: [id])
+  postId    Int
+  payload   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

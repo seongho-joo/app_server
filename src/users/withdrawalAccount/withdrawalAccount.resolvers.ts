@@ -11,10 +11,6 @@ const resolvers: Resolvers = {
         const user: User | null = await client.user.findUnique({
           where: { userId },
         });
-        const comments = await client.comment.findFirst({
-          where: { authorId: userId },
-          select: { id: true },
-        });
         const products = await client.product.findMany({
           where: { authorId: userId },
         });
@@ -30,23 +26,12 @@ const resolvers: Resolvers = {
         if (products) {
           products.forEach(async (item: Product) => {
             const { id, picture } = item;
-            const comment = await client.comment.findFirst({
-              where: { productId: id },
-            });
-            // 사용자가 작성한 상품에 댓글이 있으면 삭제
-            if (comment) {
-              await client.comment.deleteMany({ where: { productId: id } });
-            }
             if (picture.length !== 0) {
               await deleteObjectsS3(picture);
             }
           });
           // 사용자가 작성한 상품들 삭제
           await client.product.deleteMany({ where: { authorId: userId } });
-        }
-        // 사용자가 작성한 댓글들 삭제
-        if (comments) {
-          await client.comment.deleteMany({ where: { authorId: userId } });
         }
 
         await client.user.delete({ where: { userId } });

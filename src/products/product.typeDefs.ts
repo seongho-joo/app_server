@@ -14,8 +14,6 @@ export default gql`
     content: String # 내용
     status: Status! # 거래 상태
     interests: Int! # 관심 수
-    commentsCount: Int! # 댓글 수
-    comments(orderBy: String!, lastId: Int): [Comment] # 댓글보기
     createdAt: Date!
     updatedAt: Date!
   }
