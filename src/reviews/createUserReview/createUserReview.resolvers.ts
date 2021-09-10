@@ -1,25 +1,32 @@
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
+import { twoWayCheck } from '../review.utils';
 
 const resolvers: Resolvers = {
   Mutation: {
     createUserReview: protectedResolver(
       async (
         _,
-        { reciverId, productId, content, organizer, hide },
+        { reciverId, productId, content, organizer, nondisclosure },
         { client, loggedInUser }
       ) => {
         const { userId } = loggedInUser;
-        await client.userReview.create({
+        const product = await client.product.findUnique({
+          where: { id: productId },
+          select: { id: true },
+        });
+        const review = await client.userReview.create({
           data: {
             writerId: userId,
             reciverId,
-            productId,
+            ...(product && { productId }),
             content,
             organizer,
-            hide,
+            nondisclosure,
           },
+          select: { id: true },
         });
+        twoWayCheck(review.id, reciverId, userId, productId, organizer);
         return { ok: true };
       }
     ),
