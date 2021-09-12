@@ -1,3 +1,4 @@
+import { Iot } from 'aws-sdk';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 import { twoWayCheck } from '../review.utils';
@@ -27,6 +28,21 @@ const resolvers: Resolvers = {
           select: { id: true },
         });
         twoWayCheck(review.id, reciverId, userId, productId, organizer);
+        // 특정 기간 후 공개처리
+        setTimeout(async () => {
+          const res = await client.userReview.findUnique({
+            where: { id: review.id },
+            select: { hide: true },
+          });
+          if (res) {
+            if (res.hide) {
+              await client.userReview.update({
+                where: { id: review.id },
+                data: { hide: false },
+              });
+            }
+          }
+        }, 259200000);
         return { ok: true };
       }
     ),

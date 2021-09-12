@@ -13,14 +13,30 @@ const resolvers: Resolvers = {
         if (!product) {
           return { ok: false, error: '상품이 존재하지않음' };
         }
-        await client.productReview.create({
+        const review = await client.productReview.create({
           data: {
             writerId: userId,
             productId,
             content,
             hide,
           },
+          select: { id: true },
         });
+        // 특정 기간 후 공개처리
+        setTimeout(async () => {
+          const res = await client.productReview.findUnique({
+            where: { id: review.id },
+            select: { hide: true },
+          });
+          if (res) {
+            if (res.hide) {
+              await client.productReview.update({
+                where: { id: review.id },
+                data: { hide: false },
+              });
+            }
+          }
+        }, 259200000);
         return { ok: true };
       }
     ),
