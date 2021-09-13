@@ -49,6 +49,8 @@ model User {
   searchHistories    SearchHistory[]
   products           Product[]
   interests          Interest[]
+  rooms              Room[]
+  messages           Message[]
   createdAt          DateTime        @default(now())
   updatedAt          DateTime        @updatedAt
 }
@@ -86,6 +88,7 @@ model Product {
   author    User       @relation(fields: [authorId], references: [userId])
   hashtags  Hashtag[]
   interests Interest[]
+  rooms     Room[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
@@ -159,4 +162,26 @@ model ProductReview {
   nondisclosure Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model Room {
+  id        Int       @id @default(autoincrement())
+  users     User[]
+  messages  Message[]
+  product   Product   @relation(fields: [productId], references: [id])
+  productId Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  payload   String
+  read      Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [userId])
+  userId    Int
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
