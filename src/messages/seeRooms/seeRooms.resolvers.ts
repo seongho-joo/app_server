@@ -9,6 +9,7 @@ const resolvers: Resolvers = {
         where: {
           users: { some: { userId } },
         },
+        orderBy: { updatedAt: 'desc' },
       });
     }),
   },
