@@ -15,6 +15,7 @@ export default gql`
     id: Int!
     users: [User]
     messages: [Message]
+    lastMessage: Message
     product: Product!
     unreadTotal: Int!
     createdAt: Date!

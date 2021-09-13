@@ -14,6 +14,15 @@ const resolvers: Resolvers = {
           user: { userId: { not: loggedInUser.userId } },
         },
       }),
+    lastMessage: ({ id }, _, { client }) =>
+      client.message.findFirst({
+        where: { roomId: id },
+        orderBy: { createdAt: 'desc' },
+      }),
+  },
+  Message: {
+    user: ({ id }, _, { client }) =>
+      client.message.findUnique({ where: { id } }).user(),
   },
 };
 
