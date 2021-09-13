@@ -12,6 +12,7 @@ const resolvers: Resolvers = {
       ) => {
         let room = null;
         if (userId) {
+          // userId로 채팅을 할 경우
           const user = await client.user.findUnique({
             where: { userId },
             select: { userId: true },
@@ -19,14 +20,29 @@ const resolvers: Resolvers = {
           if (!user) {
             return { ok: false, error: '사용자가 존재하지 않음' };
           }
-          room = await client.room.create({
-            data: {
-              users: { connect: [{ userId: loggedInUser.userId }, { userId }] },
-              product: { connect: { id: productId } },
+          // 기존에 채팅방이 있는지 확인
+          room = await client.room.findFirst({
+            where: {
+              users: {
+                some: { AND: [{ userId }, { userId: loggedInUser.userId }] },
+              },
             },
             select: { id: true },
           });
+          // 기존에 채팅방이 없을경우 방을 새로 생성
+          if (!room) {
+            room = await client.room.create({
+              data: {
+                users: {
+                  connect: [{ userId: loggedInUser.userId }, { userId }],
+                },
+                product: { connect: { id: productId } },
+              },
+              select: { id: true },
+            });
+          }
         } else if (roomId) {
+          // roomId로 채팅을 할 경우
           room = await client.room.findUnique({
             where: { id: roomId },
             select: { id: true },
