@@ -1,4 +1,3 @@
-import { Room } from '.prisma/client';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
@@ -23,9 +22,10 @@ const resolvers: Resolvers = {
           // 기존에 채팅방이 있는지 확인
           room = await client.room.findFirst({
             where: {
-              users: {
-                some: { AND: [{ userId }, { userId: loggedInUser.userId }] },
-              },
+              AND: [
+                { users: { some: { userId } } },
+                { users: { some: { userId: loggedInUser.userId } } },
+              ],
             },
             select: { id: true },
           });
