@@ -25,10 +25,10 @@
 - [매시지 보기 & 채팅방 보기](https://github.com/seongho-joo/majgo_server/blob/master/src/messages/seeRoom/seeRoom.resolvers.ts)
 
 ## 📃 &nbsp;&nbsp;Qeury
-- [채팅 목록 보기](ttps://github.com/seongho-joo/majgo_server/blob/master/src/messages/seeRoms.resolvers.ts)
+- [채팅 목록 보기](https://github.com/seongho-joo/majgo_server/blob/master/src/messages/seeRoms.resolvers.ts)
 
 ## 🕰 &nbsp;&nbsp;Subscription
-- [실시간 채팅](ttps://github.com/seongho-joo/majgo_server/blob/master/src/messages/roomUpdate/roomUpdate.resolvers.ts)
+- [실시간 채팅](../src/messages/roomUpdate/roomUpdate.resolvers.ts)
   - graphql PubSub class는 작은 프로젝트나 교육용같은 서비스에 적합함 [※참고 링크](https://www.apollographql.com/docs/apollo-server/data/subscriptions/#the-pubsub-class)
   - 실제 서비스를 만들 경우 Redis PubSub 서버와 같은 PubSub class를 사용해야함 (유료)
   - 실시간 서비스를 적용시킬 우리 기능도 생각해봐야 함
