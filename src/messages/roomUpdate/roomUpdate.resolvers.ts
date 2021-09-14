@@ -8,19 +8,39 @@ const resolvers: Subscription = {
     roomUpdate: {
       subscribe: async (root, args, context, info) => {
         const { id } = args;
-        const { client } = context;
-        const room = await client.room.findUnique({
-          where: { id },
+        const { client, loggedInUser } = context;
+        const room = await client.room.findFirst({
+          where: {
+            id,
+            users: {
+              some: { userId: loggedInUser.userId },
+            },
+          },
           select: { id: true },
         });
         if (!room) {
-          throw new Error('권한이 없음');
+          throw new Error('You shall not see this.');
         }
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),
-          ({ roomUpdate }, { id }) => {
+          async ({ roomUpdate }, { id }, { loggedInUser }) => {
             const { roomId } = roomUpdate;
-            return roomId === id;
+            if (roomId === id) {
+              const room = await client.room.findFirst({
+                where: {
+                  id,
+                  users: {
+                    some: { userId: loggedInUser.userId },
+                  },
+                },
+                select: { id: true },
+              });
+              if (!room) {
+                return false;
+              }
+              return true;
+            }
+            return false;
           }
         )(root, args, context, info);
       },
