@@ -45,8 +45,14 @@ const resolvers: Resolvers = {
           }
         } else if (roomId) {
           // roomId로 채팅을 할 경우
-          room = await client.room.findUnique({
-            where: { id: roomId },
+          room = await client.room.findFirst({
+            where: {
+              id: roomId,
+              AND: [
+                { users: { some: { userId } } },
+                { users: { some: { userId: loggedInUser.userId } } },
+              ],
+            },
             select: { id: true },
           });
           if (!room) {
