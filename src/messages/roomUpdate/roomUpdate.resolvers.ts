@@ -9,6 +9,7 @@ const resolvers: Subscription = {
       subscribe: async (root, args, context, info) => {
         const { id } = args;
         const { client, loggedInUser } = context;
+        // 채팅방 유저인지 확인
         const room = await client.room.findFirst({
           where: {
             id,
