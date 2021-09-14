@@ -1,3 +1,5 @@
+import { NEW_MESSAGE } from '../../constants';
+import pubsub from '../../pubsub';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
 
@@ -52,13 +54,14 @@ const resolvers: Resolvers = {
           }
         }
         if (room) {
-          await client.message.create({
+          const message = await client.message.create({
             data: {
               payload,
               user: { connect: { userId: loggedInUser.userId } },
               room: { connect: { id: room.id } },
             },
           });
+          pubsub.publish(NEW_MESSAGE, { roomUpdate: { ...message } });
         }
         return {
           ok: true,
