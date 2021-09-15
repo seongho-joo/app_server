@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
     uploadProduct: protectedResolver(
       async (
         _,
-        { title, price, hours, pictures, content, hashtags },
+        { title, price, minutes, pictures, content, hashtags, classification },
         { client, loggedInUser }
       ) => {
         const { userId } = loggedInUser;
@@ -22,7 +22,8 @@ const resolvers: Resolvers = {
         }
         const { id } = await client.product.create({
           data: {
-            hours,
+            classification,
+            minutes,
             title,
             author: {
               connect: { userId },

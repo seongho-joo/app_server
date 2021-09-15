@@ -9,6 +9,7 @@ export default gql`
     minutes: Int!
     picture: [String] # 상품 이미지
     hashtags: [Hashtag]
+    classificaiton: Classificaiton! # 빌려드림, 빌림 분류
     hits: Int! # 조회수
     isMine: Boolean! # 자신이 작성한 상품인지 판별
     content: String # 내용
@@ -31,6 +32,11 @@ export default gql`
     prodcut: Product!
     createdAt: Date!
     updatedAt: Date!
+  }
+
+  enum Classificaiton {
+    LEND # 빌려드림
+    RENT # 빌림
   }
 
   enum Status {

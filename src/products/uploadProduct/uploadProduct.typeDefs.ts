@@ -14,6 +14,7 @@ export default gql`
       hashtags: [String]
       pictures: [Upload]
       content: String!
+      classification: Classificaiton!
     ): uploadProductResult!
   }
 `;

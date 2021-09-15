@@ -31,6 +31,11 @@ enum Organizer {
   RECIVER
 }
 
+enum Classification {
+  LEND // 빌려드림
+  RENT // 빌림
+}
+
 model User {
   userId             Int             @id @default(autoincrement())
   fullName           String
@@ -76,21 +81,22 @@ model SearchHistory {
 }
 
 model Product {
-  id        Int        @id @default(autoincrement())
-  authorId  Int
-  title     String
-  price     Int
-  picture   String[]
-  content   String
-  hours     Int
-  hits      Int        @default(0)
-  status    Status     @default(WAITING)
-  author    User       @relation(fields: [authorId], references: [userId])
-  hashtags  Hashtag[]
-  interests Interest[]
-  rooms     Room[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id             Int            @id @default(autoincrement())
+  authorId       Int
+  title          String
+  price          Int
+  picture        String[]
+  content        String
+  minutes        Int
+  hits           Int            @default(0)
+  status         Status         @default(WAITING)
+  classification Classification
+  author         User           @relation(fields: [authorId], references: [userId])
+  hashtags       Hashtag[]
+  interests      Interest[]
+  rooms          Room[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 model Interest {
