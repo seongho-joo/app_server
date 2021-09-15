@@ -17,14 +17,24 @@ const resolvers: Resolvers = {
             error: '물품이 존재하지 않음',
           };
         }
-        if (exProduct.authorId !== userId) {
+        const { authorId, picture } = exProduct;
+        if (authorId !== userId) {
           return {
             ok: false,
             error: '권한이 없음',
           };
         }
+        // 상품 리퓨 삭제
+        const productReview = await client.productReview.findMany({
+          where: { productId: id },
+          select: { id: true },
+        });
+        if (productReview) {
+          await client.productReview.deleteMany({
+            where: { productId: id },
+          });
+        }
         // 사진이 존재할 경우
-        const { picture } = exProduct;
         if (picture.length !== 0) {
           await deleteObjectsS3(picture);
         }
