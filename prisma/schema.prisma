@@ -37,27 +37,25 @@ enum Classification {
 }
 
 model User {
-  userId             Int             @id @default(autoincrement())
-  fullName           String
-  username           String          @unique
-  avatar             String?
-  email              String          @unique
-  password           String
-  phoneNumber        String          @unique
-  location           String?
-  role               Role            @default(USER)
-  searchHistoryOnOff Boolean         @default(true)
-  notificationOnOff  Boolean         @default(true)
-  blocking           User[]          @relation("FollowRelation", references: [userId]) // 차단 하려는 유저
-  blocker            User[]          @relation("FollowRelation", references: [userId]) // 차단 당하는 유저
-  notifications      Notification[]
-  searchHistories    SearchHistory[]
-  products           Product[]
-  interests          Interest[]
-  rooms              Room[]
-  messages           Message[]
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
+  userId          Int             @id @default(autoincrement())
+  fullName        String
+  username        String          @unique
+  avatar          String?
+  email           String          @unique
+  password        String
+  phoneNumber     String          @unique
+  location        String?
+  role            Role            @default(USER)
+  blocking        User[]          @relation("FollowRelation", references: [userId]) // 차단 하려는 유저
+  blocker         User[]          @relation("FollowRelation", references: [userId]) // 차단 당하는 유저
+  notifications   Notification[]
+  searchHistories SearchHistory[]
+  products        Product[]
+  interests       Interest[]
+  rooms           Room[]
+  messages        Message[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model Notification {
@@ -65,6 +63,7 @@ model Notification {
   userId    Int
   title     String
   content   String
+  image     String
   read      Boolean  @default(false)
   user      User     @relation(fields: [userId], references: [userId])
   createdAt DateTime @default(now())
@@ -91,7 +90,8 @@ model Product {
   hits           Int            @default(0)
   status         Status         @default(WAITING)
   classification Classification
-  author         User           @relation(fields: [authorId], references: [userId])
+  author         User           @relation(fields: [authorId], references: [userId]) // 작성자
+  traderId       Int[] // 거래자
   hashtags       Hashtag[]
   interests      Interest[]
   rooms          Room[]
