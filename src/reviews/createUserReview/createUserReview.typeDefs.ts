@@ -7,7 +7,7 @@ export default gql`
       productId: Int
       content: String!
       organizer: Organizer!
-      hide: Boolean
+      nondisclosure: Boolean
     ): MutationResponse!
   }
 `;

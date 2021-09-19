@@ -5,7 +5,7 @@ export default gql`
     createProductReview(
       productId: Int!
       content: String!
-      hide: Boolean
+      nondisclosure: Boolean
     ): MutationResponse!
   }
 `;

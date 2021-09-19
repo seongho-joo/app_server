@@ -4,7 +4,11 @@ import { protectedResolver } from '../../users/user.utils';
 const resolvers: Resolvers = {
   Mutation: {
     createProductReview: protectedResolver(
-      async (_, { productId, content, hide }, { client, loggedInUser }) => {
+      async (
+        _,
+        { productId, content, nondisclosure },
+        { client, loggedInUser }
+      ) => {
         const { userId } = loggedInUser;
         const product = await client.product.findUnique({
           where: { id: productId },
@@ -18,7 +22,7 @@ const resolvers: Resolvers = {
             writerId: userId,
             productId,
             content,
-            hide,
+            nondisclosure,
           },
           select: { id: true },
         });
