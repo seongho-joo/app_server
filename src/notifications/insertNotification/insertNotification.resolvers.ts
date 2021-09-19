@@ -2,7 +2,11 @@ import { Resolvers, Identity } from '../../types';
 
 const resolvers: Resolvers = {
   Mutation: {
-    insertNotification: async (_, { userId, title, content }, { client }) => {
+    insertNotification: async (
+      _,
+      { userId, title, content, image },
+      { client }
+    ) => {
       const exUser: Identity | null = await client.user.findUnique({
         where: { userId },
         select: { userId: true },
@@ -20,6 +24,7 @@ const resolvers: Resolvers = {
           },
           title,
           content,
+          ...(image && { image }),
         },
       });
       return { ok: true };
