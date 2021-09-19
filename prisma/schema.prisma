@@ -63,7 +63,7 @@ model Notification {
   userId    Int
   title     String
   content   String
-  image     String
+  image     String?
   read      Boolean  @default(false)
   user      User     @relation(fields: [userId], references: [userId])
   createdAt DateTime @default(now())
