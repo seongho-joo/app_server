@@ -7,6 +7,11 @@ const resolvers: Resolvers = {
     seeUserReviews: protectedResolver(
       async (_, { userId }, { client, loggedInUser }) => {
         let reviews: UserReview[] = [];
+        if (userId === loggedInUser.userId) {
+          return await client.userReview.findMany({
+            where: { reciverId: userId },
+          });
+        }
         const publicReviews = await client.userReview.findMany({
           where: {
             reciverId: userId,
