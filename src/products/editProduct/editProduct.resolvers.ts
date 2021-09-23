@@ -32,7 +32,12 @@ const resolvers: Resolvers = {
         let location: string[] = [];
         // 추가하려는 사진이 있을 경우
         if (newPictures) {
-          location = await getS3Location(newPictures, loggedInUser, product.id);
+          location = await getS3Location(
+            newPictures,
+            loggedInUser,
+            product.id,
+            Dir.PRODUCT
+          );
         }
 
         picture = picture.concat(location);

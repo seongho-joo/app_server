@@ -1,3 +1,4 @@
+import { Dir } from './../../shared/shared.utils';
 import { Product } from '@prisma/client';
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../../users/user.utils';
@@ -39,7 +40,12 @@ const resolvers: Resolvers = {
           if (pictures.length > 10) {
             return { ok: false, error: '사진 수 초과' };
           }
-          picturesUrl = await getS3Location(pictures, loggedInUser, id);
+          picturesUrl = await getS3Location(
+            pictures,
+            loggedInUser,
+            id,
+            Dir.PRODUCT
+          );
         }
         const product: Product = await client.product.update({
           where: { id },
