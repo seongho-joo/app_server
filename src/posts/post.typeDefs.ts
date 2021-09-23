@@ -6,7 +6,7 @@ export default gql`
     author: User!
     title: String!
     content: String!
-    image: String[]
+    image: [String]
     createdAt: Date!
     updatedAt: Date!
   }
