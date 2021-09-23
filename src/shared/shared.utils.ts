@@ -7,6 +7,8 @@ const accessKeyId: string | undefined = process.env.AWS_S3_KEY;
 const secretAccessKey: string | undefined = process.env.AWS_S3_SECRET;
 const Bucket: string | undefined = process.env.BUCKET;
 
+let count: number = 0;
+
 if (
   accessKeyId === undefined ||
   secretAccessKey === undefined ||
@@ -43,7 +45,7 @@ export const uploadToS3 = async (
 ) => {
   let { filename, createReadStream } = await file;
   const extension: string | undefined = filename.split('.').pop();
-  filename = `${Date.now()}.${extension}`;
+  filename = `${Date.now()}_${++count}.${extension}`;
   const readStream = createReadStream();
   let objectName: string = `${dirName}/`;
 
@@ -62,6 +64,9 @@ export const uploadToS3 = async (
       objectName += `${filename}`;
       break;
     case 'notices':
+      objectName += `${identity}/${filename}`;
+      break;
+    case 'posts':
       objectName += `${identity}/${filename}`;
       break;
   }
@@ -111,4 +116,5 @@ export enum Dir {
   PRODUCT = 'products',
   BANNER = 'banners',
   NOTICE = 'notices',
+  POST = 'posts',
 }
