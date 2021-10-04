@@ -1,8 +1,8 @@
 # Todo
 - 커뮤니티
   - [x] 게시글 작성
+  - [x] 게시글 삭제
   - [ ] 게시글 수정
-  - [ ] 게시글 삭제
   - [ ] 댓글 작성
   - [ ] 댓글 수정
   - [ ] 댓글 삭제
@@ -19,6 +19,7 @@
 
 ## ⚙️ &nbsp;&nbsp;Mutation
 - [게시물 작성](https://github.com/seongho-joo/majgo_server/commit/f87c85a6dab89e18e1d6a9cf43b60a143069cad6)
+- [게시글 삭제](https://github.com/seongho-joo/majgo_server/commit/2a0bf15ad7a8324f3a7e5ce350017c42f25ad8bc)
 
 <!--
 
