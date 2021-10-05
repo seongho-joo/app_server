@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Comment" ALTER COLUMN "postId" DROP NOT NULL,
+ALTER COLUMN "userId" DROP NOT NULL;

@@ -54,7 +54,9 @@ model User {
   interests       Interest[]
   rooms           Room[]
   messages        Message[]
+  /// @onDelete(CASCADE)
   posts           Post[]
+  /// @onDelete(CASCADE)
   comments        Comment[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
@@ -83,7 +85,7 @@ model SearchHistory {
 
 model Product {
   id             Int            @id @default(autoincrement())
-  authorId       Int
+  authorId       Int?
   title          String
   price          Int
   picture        String[]
@@ -92,7 +94,7 @@ model Product {
   hits           Int            @default(0)
   status         Status         @default(WAITING)
   classification Classification
-  author         User           @relation(fields: [authorId], references: [userId]) // 작성자
+  author         User?          @relation(fields: [authorId], references: [userId]) // 작성자
   traderId       Int[] // 거래자
   hashtags       Hashtag[]
   interests      Interest[]
@@ -177,21 +179,22 @@ model Message {
   id        Int      @id @default(autoincrement())
   payload   String
   read      Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [userId])
-  userId    Int
-  room      Room     @relation(fields: [roomId], references: [id])
-  roomId    Int
+  user      User?    @relation(fields: [userId], references: [userId])
+  userId    Int?
+  room      Room?    @relation(fields: [roomId], references: [id])
+  roomId    Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Post {
   id        Int       @id @default(autoincrement())
-  author    User      @relation(fields: [authorId], references: [userId])
-  authorId  Int
+  author    User?     @relation(fields: [authorId], references: [userId])
+  authorId  Int?
   title     String
   content   String
   image     String[]
+  /// @onDelete(CASCADE)
   comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -199,10 +202,10 @@ model Post {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  userId    Int
-  postId    Int
-  user      User     @relation(fields: [userId], references: [userId])
-  post      Post     @relation(fields: [postId], references: [id])
+  userId    Int?
+  postId    Int?
+  user      User?    @relation(fields: [userId], references: [userId])
+  post      Post?    @relation(fields: [postId], references: [id])
   payload   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
