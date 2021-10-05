@@ -1,11 +1,6 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type Test {
-    ok: Boolean!
-    error: String
-    post: Post
-  }
   type Mutation {
     editPost(
       id: Int!
@@ -13,6 +8,6 @@ export default gql`
       content: String
       newImages: [Upload]
       removeImages: [String]
-    ): Test!
+    ): MutationResponse!
   }
 `;

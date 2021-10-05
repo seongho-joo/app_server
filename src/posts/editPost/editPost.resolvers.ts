@@ -39,7 +39,7 @@ const resolvers: Resolvers = {
 
         image = image.concat(location);
 
-        post = await client.post.update({
+        await client.post.update({
           where: { id },
           data: {
             ...(title && { title }),
@@ -48,7 +48,7 @@ const resolvers: Resolvers = {
           },
         });
 
-        return { ok: true, post };
+        return { ok: true };
       }
     ),
   },
