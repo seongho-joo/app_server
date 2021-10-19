@@ -101,6 +101,7 @@ model Product {
   rooms          Room[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
+  CheckList      CheckList[]
 }
 
 model Interest {
@@ -207,6 +208,15 @@ model Comment {
   user      User?    @relation(fields: [userId], references: [userId])
   post      Post?    @relation(fields: [postId], references: [id])
   payload   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CheckList {
+  id        Int      @id @default(autoincrement())
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
+  checkList String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
