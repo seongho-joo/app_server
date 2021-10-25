@@ -60,6 +60,7 @@ model User {
   comments        Comment[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  Like            Like[]
 }
 
 model Notification {
@@ -197,8 +198,21 @@ model Post {
   image     String[]
   /// @onDelete(CASCADE)
   comments  Comment[]
+  likes     Like[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  post      Post?    @relation(fields: [postId], references: [id])
+  postId    Int?
+  user      User?    @relation(fields: [userId], references: [userId])
+  userId    Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([postId, userId])
 }
 
 model Comment {
@@ -213,10 +227,10 @@ model Comment {
 }
 
 model CheckList {
-  id        Int      @id @default(autoincrement())
-  productId Int?
-  product   Product? @relation(fields: [productId], references: [id])
-  checkList String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  productId  Int?
+  product    Product? @relation(fields: [productId], references: [id])
+  checkLists String[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
