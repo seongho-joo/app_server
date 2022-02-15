@@ -1,16 +1,20 @@
-# 🚀 시간다리 server
+# Doling App Server
+> 사용하지 않는 물건을 공유하는 어플 서버
 
-## Tech
-- `Typescript`
-- `Apollo Server`
-- `Prisma`
-- `GraphQL`
-- `Postgresql`
-- `AWS`
+## ⚒️ Tech
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/> &nbsp;
+<img src="https://img.shields.io/badge/ts-node-3178C6?style=flat-square&logo=ts-node&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=Prisma&logoColor=white"/>&nbsp;
+<br/>
+<img src="https://img.shields.io/badge/GrpahQL-E434AA?style=flat-square&logo=GraphQL&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/Apollo-311C87?style=flat-square&logo=Apollo GraphQL&logoColor=white"/>&nbsp;
+<img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=PostgreSQL&logoColor=white"/>&nbsp;
 
-<details>
-<summary>Todo List</summary>
+## ⌚️ Duration
+`2021.06.01` ~ `2021.10.27`
+- 아이디어 변경으로 인한 개발 중단
 
+## 📝 Todo List
 - API
   - [x] email 인증 구현 [테스트]
 - 회원가입
@@ -45,7 +49,7 @@
   - [x] 리스트 보기
   - [x] 관심
   - [x] 상품 검색
-    - 체크리스트
+  - [ ] 상품 거래
 - 댓글
   - [x] 댓글 작성
   - [x] 댓글 수정
@@ -60,12 +64,3 @@
   - [x] 보기
   - [x] 수정
   - [x] 리스트
-- 고객센터
-  - [ ] FAQ
-  - [ ] 문의하기
-- 커뮤니티
-  - [ ] create Post
-  - [ ] edit Post
-  - [ ] delete Post
-</details>
-<br>
